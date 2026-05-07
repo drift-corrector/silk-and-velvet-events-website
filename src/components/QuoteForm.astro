@@ -1,0 +1,564 @@
+---
+import { PHONE_DISPLAY, PHONE } from '~/lib/contact';
+
+const FORMSPREE_ID = (import.meta.env.PUBLIC_FORMSPREE_ID as string | undefined) ?? '';
+const formAction = FORMSPREE_ID ? `https://formspree.io/f/${FORMSPREE_ID}` : '#';
+
+const eventTypes = [
+  { value: 'wedding', label: 'Wedding' },
+  { value: 'milestone', label: 'Milestone party' },
+  { value: 'shower', label: 'Shower' },
+  { value: 'birthday', label: 'Birthday' },
+  { value: 'corporate', label: 'Corporate / Holiday' },
+  { value: 'balloon', label: 'Balloon-only' },
+];
+
+const timelines = [
+  { value: 'date-set', label: 'Date is set' },
+  { value: '1-3-months', label: '1–3 months out' },
+  { value: '3-6-months', label: '3–6 months out' },
+  { value: 'exploring', label: 'Just exploring' },
+];
+
+const expectations = [
+  'Free initial consult',
+  'Reply within 1–2 business days',
+  'Real pricing, no “from $$$”',
+  'Sofiya replies fastest by text',
+];
+---
+
+<section class="quote" id="quote">
+  <div class="quote__head">
+    <p class="quote__eyebrow">Request a quote</p>
+    <h2 class="quote__title">Tell us about <em>your event.</em></h2>
+    <p class="quote__sub">A few quick details and we'll come back with a custom quote — usually within 1–2 business days.</p>
+  </div>
+
+  <div class="quote__layout">
+    <aside class="quote__side">
+      <div class="progress" aria-hidden="true">
+        <div class="progress__head">
+          <span class="progress__label">Form Progress</span>
+          <span class="progress__count" data-progress-count>0 / 4</span>
+        </div>
+        <div class="progress__track">
+          <div class="progress__bar" data-progress-bar></div>
+        </div>
+      </div>
+
+      <div class="expect">
+        <h3 class="expect__title">What to expect</h3>
+        <ul class="expect__list">
+          {expectations.map((e) => (
+            <li>
+              <span class="expect__check" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7.5l3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span>{e}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="alt">
+        <p class="alt__label">Prefer to text or DM?</p>
+        <a class="alt__link" href={`sms:${PHONE}`}>
+          <span>{PHONE_DISPLAY}</span>
+          <span class="alt__arrow" aria-hidden="true">→</span>
+        </a>
+        <button class="alt__widget" type="button" data-open-widget>
+          Open all channels
+        </button>
+      </div>
+    </aside>
+
+    <form
+      class="form"
+      action={formAction}
+      method="POST"
+      novalidate
+      data-quote-form
+    >
+      <div class="form__row">
+        <label for="qf-name">Name <span class="req" aria-hidden="true">*</span></label>
+        <input
+          id="qf-name"
+          name="name"
+          type="text"
+          placeholder="Your full name"
+          required
+          autocomplete="name"
+          data-progress-field
+        />
+      </div>
+
+      <div class="form__row form__row--two">
+        <div>
+          <label for="qf-email">Email <span class="req" aria-hidden="true">*</span></label>
+          <input
+            id="qf-email"
+            name="email"
+            type="email"
+            placeholder="you@email.com"
+            required
+            autocomplete="email"
+            data-progress-field
+          />
+        </div>
+        <div>
+          <label for="qf-phone">Phone <span class="opt">(optional)</span></label>
+          <input
+            id="qf-phone"
+            name="phone"
+            type="tel"
+            placeholder="(646) 555-0182"
+            autocomplete="tel"
+          />
+        </div>
+      </div>
+
+      <div class="form__row">
+        <label>Event type <span class="req" aria-hidden="true">*</span></label>
+        <div class="chips" role="radiogroup" aria-label="Event type" data-chip-group="event-type">
+          {eventTypes.map((t, i) => (
+            <label class="chip">
+              <input
+                type="radio"
+                name="event-type"
+                value={t.value}
+                required={i === 0}
+                data-progress-field
+                data-progress-group="event-type"
+              />
+              <span>{t.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div class="form__row">
+        <label>Timeline <span class="opt">(optional)</span></label>
+        <div class="chips" role="radiogroup" aria-label="Timeline">
+          {timelines.map((t) => (
+            <label class="chip">
+              <input type="radio" name="timeline" value={t.value} />
+              <span>{t.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div class="form__row">
+        <label for="qf-message">Tell us about your event <span class="req" aria-hidden="true">*</span></label>
+        <textarea
+          id="qf-message"
+          name="message"
+          rows="5"
+          required
+          placeholder="Date, venue (if known), guest count, vibe, anything you've already pulled together…"
+          data-progress-field
+        ></textarea>
+      </div>
+
+      <button class="form__submit" type="submit" disabled={!FORMSPREE_ID}>
+        {FORMSPREE_ID ? 'Send inquiry' : 'Form coming soon'}
+        <span class="form__arrow" aria-hidden="true">→</span>
+      </button>
+      {!FORMSPREE_ID && (
+        <p class="form__note">Formspree not yet provisioned — use the channels on the left in the meantime.</p>
+      )}
+    </form>
+  </div>
+</section>
+
+<style>
+  .quote {
+    padding: 5rem 4rem;
+    background: var(--paper);
+  }
+  .quote__head {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .quote__eyebrow {
+    color: var(--burgundy);
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0 0 0.75rem;
+  }
+  .quote__title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(2rem, 4.4vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    margin: 0 0 0.75rem;
+  }
+  .quote__title em {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--burgundy);
+  }
+  .quote__sub {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .quote__layout {
+    display: grid;
+    grid-template-columns: 0.85fr 1.4fr;
+    gap: 2.5rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .quote__side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 5rem;
+  }
+
+  .progress {
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--gold) 25%, transparent);
+    border-radius: var(--r-md);
+    padding: 1.1rem 1.25rem;
+  }
+  .progress__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.65rem;
+  }
+  .progress__label {
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .progress__count {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--burgundy);
+    font-feature-settings: 'lnum';
+  }
+  .progress__track {
+    height: 4px;
+    background: color-mix(in oklch, var(--ink) 7%, transparent);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress__bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--gold), var(--burgundy));
+    border-radius: 999px;
+    transition: width 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .expect {
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--gold) 25%, transparent);
+    border-radius: var(--r-md);
+    padding: 1.25rem 1.4rem;
+  }
+  .expect__title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin: 0 0 0.85rem;
+  }
+  .expect__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .expect__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.93rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .expect__check {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: color-mix(in oklch, var(--pink) 65%, transparent);
+    color: var(--burgundy);
+    display: grid;
+    place-items: center;
+    margin-top: 1px;
+  }
+
+  .alt {
+    background: color-mix(in oklch, var(--pink) 30%, transparent);
+    border-radius: var(--r-md);
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .alt__label {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .alt__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    color: var(--burgundy);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    border-bottom: 1px solid color-mix(in oklch, var(--burgundy) 30%, transparent);
+    align-self: flex-start;
+    padding-bottom: 2px;
+  }
+  .alt__link:hover { border-bottom-color: var(--burgundy); }
+  .alt__arrow { transition: transform 200ms ease; }
+  .alt__link:hover .alt__arrow { transform: translateX(4px); }
+  .alt__widget {
+    align-self: flex-start;
+    margin-top: 0.35rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--ink) 30%, transparent);
+    text-underline-offset: 3px;
+  }
+  .alt__widget:hover { color: var(--burgundy); }
+
+  .form {
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--gold) 28%, transparent);
+    border-radius: var(--r-lg);
+    padding: 2rem 2.25rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .form__row--two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .form__row--two > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  label {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .req { color: var(--burgundy); margin-left: 2px; }
+  .opt {
+    color: var(--ink-soft);
+    font-weight: 400;
+    margin-left: 4px;
+    font-size: 0.78rem;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    font: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid color-mix(in oklch, var(--ink) 12%, transparent);
+    border-radius: var(--r-sm);
+    padding: 0.75rem 0.9rem;
+    font-size: 0.95rem;
+    transition: border-color 200ms ease, background-color 200ms ease;
+  }
+  input::placeholder, textarea::placeholder {
+    color: color-mix(in oklch, var(--ink-soft) 65%, transparent);
+  }
+  input:focus,
+  textarea:focus {
+    outline: 2px solid color-mix(in oklch, var(--burgundy) 30%, transparent);
+    outline-offset: 1px;
+    border-color: var(--burgundy);
+    background: var(--cream);
+  }
+  textarea { resize: vertical; min-height: 120px; }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.15rem;
+  }
+  .chip {
+    cursor: pointer;
+    user-select: none;
+  }
+  .chip input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+  .chip span {
+    display: inline-block;
+    padding: 0.5rem 0.95rem;
+    border: 1px solid color-mix(in oklch, var(--ink) 13%, transparent);
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    color: var(--ink);
+    background: var(--paper);
+    transition: all 180ms ease;
+  }
+  .chip:hover span {
+    border-color: var(--burgundy);
+    color: var(--burgundy);
+  }
+  .chip input:checked + span {
+    background: var(--burgundy);
+    color: var(--cream);
+    border-color: var(--burgundy);
+  }
+  .chip input:focus-visible + span {
+    outline: 2px solid color-mix(in oklch, var(--burgundy) 35%, transparent);
+    outline-offset: 2px;
+  }
+
+  .form__submit {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.9rem 1.6rem;
+    background: var(--burgundy);
+    color: var(--cream);
+    border: none;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  }
+  .form__submit:hover:not(:disabled) {
+    background: oklch(0.36 0.16 5);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  .form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
+  .form__arrow { transition: transform 220ms ease; }
+  .form__submit:hover:not(:disabled) .form__arrow { transform: translateX(4px); }
+  .form__note {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin: 0.5rem 0 0;
+  }
+
+  @media (max-width: 980px) {
+    .quote__layout {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    .quote__side {
+      position: static;
+      order: 2;
+    }
+    .form { order: 1; }
+  }
+  @media (max-width: 600px) {
+    .quote { padding: 3.5rem 1.5rem; }
+    .form { padding: 1.5rem 1.25rem 1.75rem; }
+    .form__row--two { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .progress__bar,
+    .form__submit,
+    .form__arrow,
+    .alt__arrow,
+    .chip span,
+    input,
+    textarea {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-quote-form]');
+  if (form) {
+    const bar = form.parentElement?.querySelector<HTMLElement>('[data-progress-bar]');
+    const count = form.parentElement?.querySelector<HTMLElement>('[data-progress-count]');
+    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-progress-field]');
+
+    const groupNames = new Set<string>();
+    fields.forEach((f) => {
+      const g = f.getAttribute('data-progress-group');
+      if (g) groupNames.add(g);
+    });
+
+    const totalSlots =
+      Array.from(fields).filter((f) => !f.getAttribute('data-progress-group')).length +
+      groupNames.size;
+
+    const update = () => {
+      let filled = 0;
+      const seenGroups = new Set<string>();
+      fields.forEach((f) => {
+        const g = f.getAttribute('data-progress-group');
+        if (g) {
+          if (seenGroups.has(g)) return;
+          if (form.querySelector<HTMLInputElement>(`input[name="${f.getAttribute('name')}"]:checked`)) {
+            filled += 1;
+            seenGroups.add(g);
+          }
+          return;
+        }
+        if (f.value && f.value.trim()) filled += 1;
+      });
+      const ratio = totalSlots > 0 ? Math.min(filled / totalSlots, 1) : 0;
+      if (bar) bar.style.width = `${ratio * 100}%`;
+      if (count) count.textContent = `${filled} / ${totalSlots}`;
+    };
+
+    fields.forEach((f) => {
+      f.addEventListener('input', update);
+      f.addEventListener('change', update);
+    });
+    update();
+  }
+</script>

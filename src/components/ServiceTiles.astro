@@ -1,32 +1,241 @@
 ---
 import { getCollection } from 'astro:content';
-import ServiceTile from './ServiceTile.astro';
 
 const groups = await getCollection('service-groups');
 const sorted = groups.sort((a, b) => a.data.order - b.data.order);
+const [feature, ...rest] = sorted;
 ---
 
-<div class="tiles">
-  {sorted.map((g) => (
-    <ServiceTile
-      tag={g.data.eyebrowTag}
-      name={g.data.title}
-      description={g.data.description}
-      href={`/services/#${g.id.replace(/\.md$/, '')}`}
-      ctaLabel={g.data.ctaLabel}
-    />
-  ))}
+<div class="services">
+  {feature && (
+    <a class="feature" href={`/services/#${feature.id.replace(/\.md$/, '')}`}>
+      <div class="feature__copy">
+        <span class="feature__eyebrow">{feature.data.eyebrowTag}</span>
+        <h3 class="feature__name">{feature.data.title}</h3>
+        <p class="feature__desc">{feature.data.description}</p>
+        <span class="feature__cta">
+          <span>{feature.data.ctaLabel}</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </span>
+      </div>
+      <div class="feature__photo" aria-hidden="true">
+        <span class="feature__photo-caption">Wedding · Long Island · 2025</span>
+      </div>
+    </a>
+  )}
+
+  <div class="grid">
+    {rest.map((g, i) => (
+      <a class={`tile tile--${i + 1}`} href={`/services/#${g.id.replace(/\.md$/, '')}`}>
+        <div class="tile__photo" aria-hidden="true"></div>
+        <div class="tile__copy">
+          <span class="tile__eyebrow">{g.data.eyebrowTag}</span>
+          <h3 class="tile__name">{g.data.title}</h3>
+          <p class="tile__desc">{g.data.description}</p>
+          <span class="tile__cta">
+            <span>{g.data.ctaLabel}</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
 </div>
 
 <style>
-  .tiles {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
+  .services {
     max-width: 1320px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
   }
-  @media (max-width: 1280px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 1100px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .tiles { grid-template-columns: 1fr; } }
+
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 0;
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--gold) 35%, transparent);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    min-height: 360px;
+    transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+  }
+  .feature:hover,
+  .feature:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: color-mix(in oklch, var(--gold) 70%, transparent);
+    outline: none;
+  }
+  .feature__copy {
+    padding: 2.75rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-self: center;
+  }
+  .feature__eyebrow {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 500;
+    align-self: flex-start;
+  }
+  .feature__name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.85rem, 3.4vw, 2.6rem);
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .feature__desc {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 48ch;
+  }
+  .feature__cta {
+    margin-top: 0.4rem;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--burgundy);
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    align-self: flex-start;
+  }
+  .feature__photo {
+    background:
+      radial-gradient(circle at 70% 30%, color-mix(in oklch, var(--gold) 50%, transparent), transparent 55%),
+      linear-gradient(160deg, var(--pink), var(--blush) 60%, var(--tan));
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+  }
+  .feature__photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 80%, color-mix(in oklch, var(--burgundy) 22%, transparent), transparent 55%);
+    mix-blend-mode: multiply;
+  }
+  .feature__photo-caption {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    background: color-mix(in oklch, var(--ink) 35%, transparent);
+    padding: 5px 11px;
+    border-radius: var(--r-pill);
+    backdrop-filter: blur(8px);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--gold) 28%, transparent);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
+  }
+  .tile:hover,
+  .tile:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: color-mix(in oklch, var(--gold) 60%, transparent);
+    outline: none;
+  }
+  .tile__photo {
+    aspect-ratio: 4 / 3;
+    position: relative;
+  }
+  .tile--1 .tile__photo { background: linear-gradient(150deg, var(--blush), var(--tan)); }
+  .tile--2 .tile__photo { background: linear-gradient(160deg, var(--pink), var(--blush)); }
+  .tile--3 .tile__photo { background: linear-gradient(180deg, var(--gold) 30%, var(--tan)); }
+  .tile--4 .tile__photo { background: linear-gradient(170deg, var(--pink), var(--gold) 70%); }
+  .tile__copy {
+    padding: 1.5rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    flex: 1;
+  }
+  .tile__eyebrow {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    font-weight: 500;
+  }
+  .tile__name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .tile__desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    flex: 1;
+  }
+  .tile__cta {
+    margin-top: 0.4rem;
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--burgundy);
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: baseline;
+  }
+  .arrow {
+    display: inline-block;
+    transition: transform 220ms ease;
+  }
+  .tile:hover .arrow,
+  .feature:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .feature { grid-template-columns: 1fr; min-height: 0; }
+    .feature__photo { min-height: 220px; aspect-ratio: 16 / 10; order: -1; }
+    .feature__copy { padding: 2rem 1.5rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feature, .tile, .arrow { transition: none; }
+  }
 </style>

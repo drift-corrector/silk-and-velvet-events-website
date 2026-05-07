@@ -1,56 +1,168 @@
 ---
 import { getCollection } from 'astro:content';
 const steps = (await getCollection('process')).sort((a, b) => a.data.step - b.data.step);
+
+const HIGHLIGHTS: Record<number, string> = {
+  1: 'Quote in 1–2 business days',
+  2: 'Contract + retainer',
+  3: 'On-site install',
+  4: 'Timeline + teardown',
+};
 ---
 
-<ol class="process__row">
-  {steps.map((s) => (
-    <li class="step">
-      <div class="step__num">{String(s.data.step).padStart(2, '0')}</div>
-      <h3 class="step__name">{s.data.name}</h3>
-      <p class="step__desc">{s.data.description}</p>
-    </li>
-  ))}
+<ol class="timeline" aria-label="Our four-step process">
+  {steps.map((s, i) => {
+    const sideClass = i % 2 === 0 ? 'node--left' : 'node--right';
+    return (
+      <li class={`node ${sideClass}`}>
+        <span class="node__dot" aria-hidden="true"></span>
+        <article class="node__card">
+          <p class="node__num">{String(s.data.step).padStart(2, '0')}</p>
+          <h3 class="node__name">{s.data.name}</h3>
+          <p class="node__desc">{s.data.description}</p>
+          {HIGHLIGHTS[s.data.step] && (
+            <span class="node__pill">{HIGHLIGHTS[s.data.step]}</span>
+          )}
+        </article>
+      </li>
+    );
+  })}
 </ol>
 
 <style>
-  .process__row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-    max-width: 1100px;
-    margin: 0 auto;
+  .timeline {
+    position: relative;
     list-style: none;
-    padding: 0;
+    margin: 0 auto;
+    padding: 1rem 0 0;
+    max-width: 1080px;
   }
-  .step {
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: calc(50% - 0.5px);
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: color-mix(in oklch, var(--gold) 55%, transparent);
+  }
+  .node {
+    display: grid;
+    grid-template-columns: 1fr 36px 1fr;
+    margin-bottom: 2.25rem;
+    position: relative;
+  }
+  .node:last-child {
+    margin-bottom: 0;
+  }
+  .node--left .node__card {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .node--right .node__card {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .node__dot {
+    grid-column: 2;
+    grid-row: 1;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
     background: var(--cream);
+    align-self: start;
+    justify-self: center;
+    margin-top: 2rem;
+    z-index: 1;
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--pink-soft) 80%, transparent);
+  }
+  .node__card {
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--gold) 32%, transparent);
     border-radius: var(--r-lg);
-    padding: 1.5rem;
-    border: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+    padding: 1.75rem 1.75rem 1.5rem;
+    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    position: relative;
+    transition: transform 320ms ease, box-shadow 320ms ease, border-color 320ms ease;
   }
-  .step__num {
+  .node__card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: color-mix(in oklch, var(--gold) 60%, transparent);
+  }
+  .node__num {
     font-family: var(--serif);
     font-style: italic;
-    font-size: 1.6rem;
+    font-size: 1.15rem;
     color: var(--gold);
+    margin: 0;
+    letter-spacing: 0.04em;
     line-height: 1;
   }
-  .step__name {
-    font-family: var(--sans);
-    font-size: 1rem;
-    font-weight: 500;
+  .node__name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.55rem;
+    line-height: 1.1;
     color: var(--ink);
+    letter-spacing: -0.015em;
     margin: 0;
   }
-  .step__desc {
-    font-size: 0.88rem;
+  .node__desc {
+    font-size: 0.96rem;
+    line-height: 1.55;
     color: var(--ink-soft);
     margin: 0;
   }
-  @media (max-width: 880px) { .process__row { grid-template-columns: repeat(2, 1fr); } }
+  .node__pill {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    background: color-mix(in oklch, var(--pink) 60%, transparent);
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    font-weight: 500;
+  }
+
+  @media (max-width: 880px) {
+    .timeline {
+      padding-left: 1.75rem;
+    }
+    .timeline::before {
+      left: 7px;
+    }
+    .node {
+      grid-template-columns: 24px 1fr;
+      margin-bottom: 1.75rem;
+    }
+    .node--left .node__card,
+    .node--right .node__card {
+      grid-column: 2;
+    }
+    .node__dot {
+      grid-column: 1;
+      margin-top: 1.75rem;
+      box-shadow: 0 0 0 4px var(--cream);
+    }
+    .node__card {
+      padding: 1.5rem 1.25rem 1.25rem;
+    }
+    .node__name {
+      font-size: 1.35rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .node__card {
+      transition: none;
+    }
+  }
 </style>

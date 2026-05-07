@@ -6,6 +6,7 @@ import ServiceTiles from '~/components/ServiceTiles.astro';
 import GalleryGrid from '~/components/GalleryGrid.astro';
 import ReviewsRow from '~/components/ReviewsRow.astro';
 import ProcessStrip from '~/components/ProcessStrip.astro';
+import QuoteForm from '~/components/QuoteForm.astro';
 import OrganizationSchema from '~/components/seo/OrganizationSchema.astro';
 import LocalBusinessSchema from '~/components/seo/LocalBusinessSchema.astro';
 
@@ -56,6 +57,8 @@ const homePhotos = [
     <SectionHead eyebrow="Process" title="Four steps, <em>start to celebrate.</em>" />
     <ProcessStrip />
   </section>
+
+  <QuoteForm />
 </BaseLayout>
 
 <style>
