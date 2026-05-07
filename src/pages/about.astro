@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import SectionHead from '~/components/SectionHead.astro';
-import TeamCard from '~/components/TeamCard.astro';
+import TeamSection from '~/components/TeamSection.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
 const title = 'About Sofiya — Silk & Velvet Events';
@@ -13,29 +13,27 @@ const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.
 <BaseLayout title={title} description={description}>
   <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
 
-  <section class="about">
+  <section class="team-intro">
     <SectionHead
       as="h1"
       eyebrow="About"
       title="Three planners. <em>One promise.</em>"
       sub="Silk & Velvet started in 2018 with one event and a soft suspicion that planning could feel calmer than it usually does. Today the team is three."
     />
+  </section>
 
-    <div class="team__grid">
-      {team.map(async (member) => {
-        const { Content } = await member.render();
-        return (
-          <TeamCard name={member.data.name} role={member.data.role}>
-            <Content />
-          </TeamCard>
-        );
-      })}
-    </div>
+  <section class="team-detail">
+    {team.map((member) => (
+      <TeamSection member={member} slug={member.id.replace(/\.md$/, '')} />
+    ))}
   </section>
 </BaseLayout>
 
 <style>
-  .about { padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
-  .team__grid { display: flex; flex-direction: column; gap: 1.25rem; }
-  @media (max-width: 600px) { .about { padding: 3.5rem 1.5rem; } }
+  .team-intro { padding: 5rem 4rem 1rem; }
+  .team-detail { padding: 1rem 4rem 5rem; }
+  @media (max-width: 600px) {
+    .team-intro { padding: 3.5rem 1.5rem 0.5rem; }
+    .team-detail { padding: 0.5rem 1.5rem 3.5rem; }
+  }
 </style>

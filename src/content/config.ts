@@ -77,6 +77,7 @@ const team = defineCollection({
     role: z.string(),
     order: z.number().int().default(0),
     photo: z.string().optional(),
+    photoCaption: z.string().optional(),
   }),
 });
 
