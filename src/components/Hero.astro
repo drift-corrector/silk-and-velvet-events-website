@@ -17,18 +17,15 @@ const { pillLabel = 'Now booking 2026 weddings', photoCaption = 'Wedding · Long
     </div>
   </div>
   <div class="hero__photo" aria-hidden="true"><span>{photoCaption}</span></div>
-  <div class="hero__metrics">
-    <div class="metric"><strong>200+</strong><span>Events styled</span></div>
-    <div class="metric"><strong>4–8 wks</strong><span>Avg. lead time</span></div>
-    <div class="metric"><strong>NY · NJ · LI</strong><span>Service area</span></div>
-    <div class="metric"><strong>1–2 days</strong><span>Quote turnaround</span></div>
-  </div>
+  <aside class="hero__mission">
+    <p>Florals, balloons, lighting, paper, and the quiet logistics in between — designed to feel weightless on the day it actually matters.</p>
+  </aside>
 </section>
 
 <style>
   .hero {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.8fr 1.2fr;
     gap: 3rem;
     align-items: center;
     padding: 4rem 4rem 6rem;
@@ -58,8 +55,8 @@ const { pillLabel = 'Now booking 2026 weddings', photoCaption = 'Wedding · Long
   .hero__headline {
     font-family: var(--sans);
     font-weight: 400;
-    font-size: clamp(2.6rem, 6vw, 4.8rem);
-    line-height: 1.02;
+    font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+    line-height: 1.05;
     letter-spacing: -0.04em;
     color: var(--ink);
     margin: 0;
@@ -69,7 +66,8 @@ const { pillLabel = 'Now booking 2026 weddings', photoCaption = 'Wedding · Long
     font-style: normal;
     color: var(--burgundy);
     font-weight: 400;
-    font-size: 1.15em;
+    font-size: 0.95em;
+    line-height: 1;
     letter-spacing: 0;
   }
   .hero__lead {
@@ -142,31 +140,25 @@ const { pillLabel = 'Now booking 2026 weddings', photoCaption = 'Wedding · Long
     backdrop-filter: blur(8px);
   }
 
-  .hero__metrics {
+  .hero__mission {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-top: 2rem;
+    max-width: 640px;
+    margin: 2rem auto 0;
     padding-top: 2.5rem;
     border-top: 1px solid color-mix(in oklch, var(--ink) 10%, transparent);
+    text-align: center;
   }
-  .metric { display: flex; flex-direction: column; gap: 4px; }
-  .metric strong {
+  .hero__mission p {
     font-family: var(--serif);
     font-style: italic;
-    font-size: 1.85rem;
-    color: var(--burgundy);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-  }
-  .metric span {
-    font-size: 0.78rem;
+    font-size: 1.25rem;
+    line-height: 1.55;
     color: var(--ink-soft);
-    letter-spacing: 0.02em;
+    margin: 0;
   }
   @media (max-width: 880px) {
     .hero { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 4rem; }
-    .hero__metrics { grid-template-columns: repeat(2, 1fr); }
+    .hero__mission { text-align: left; padding-top: 2rem; margin-top: 1.5rem; }
+    .hero__mission p { font-size: 1.1rem; }
   }
 </style>

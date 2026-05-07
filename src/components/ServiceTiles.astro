@@ -3,18 +3,7 @@ import { getCollection } from 'astro:content';
 import ServiceTile from './ServiceTile.astro';
 
 const groups = await getCollection('service-groups');
-const services = await getCollection('services');
-
 const sorted = groups.sort((a, b) => a.data.order - b.data.order);
-
-function bulletsFor(slug: string): string[] {
-  const group = groups.find((g) => g.id === slug);
-  if (!group) return [];
-  return group.data.services
-    .map((sSlug) => services.find((s) => s.id === sSlug))
-    .filter((s): s is NonNullable<typeof s> => Boolean(s))
-    .map((s) => s.data.shortName ?? s.data.title);
-}
 ---
 
 <div class="tiles">
@@ -22,9 +11,8 @@ function bulletsFor(slug: string): string[] {
     <ServiceTile
       tag={g.data.eyebrowTag}
       name={g.data.title}
-      priceFrom={g.data.priceFrom}
-      bullets={bulletsFor(g.id)}
-      href="#contact"
+      description={g.data.description}
+      href={`/services/#${g.id.replace(/\.md$/, '')}`}
       ctaLabel={g.data.ctaLabel}
     />
   ))}

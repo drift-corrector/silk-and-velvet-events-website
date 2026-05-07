@@ -28,7 +28,6 @@ const description = service.data.seo?.description ?? service.data.description;
     slot="head"
     name={service.data.title}
     description={description}
-    priceFrom={service.data.priceFrom}
     url={pageUrl}
   />
   <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
@@ -43,7 +42,6 @@ const description = service.data.seo?.description ?? service.data.description;
 
     <div class="service__body">
       <div class="service__intro">
-        <p class="service__price">From <strong>${service.data.priceFrom.toLocaleString('en-US')}</strong></p>
         <Content />
       </div>
 
@@ -63,14 +61,6 @@ const description = service.data.seo?.description ?? service.data.description;
   .service__body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: start; }
   .service__intro { font-size: 1.05rem; line-height: 1.7; color: var(--ink); }
   .service__intro :global(p) { margin: 0 0 1rem; }
-  .service__price {
-    font-family: var(--serif);
-    font-style: italic;
-    color: var(--burgundy);
-    font-size: 1.2rem;
-    margin: 0 0 1.5rem;
-  }
-  .service__price strong { font-style: normal; font-size: 1.6rem; font-weight: 500; }
   .service__inclusions {
     background: var(--cream);
     padding: 2rem;

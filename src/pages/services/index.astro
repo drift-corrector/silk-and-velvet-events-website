@@ -1,41 +1,45 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import SectionHead from '~/components/SectionHead.astro';
-import ServiceTiles from '~/components/ServiceTiles.astro';
-import ServicesTable from '~/components/ServicesTable.astro';
+import ServiceGroupSection from '~/components/ServiceGroupSection.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
-const title = 'Services & Pricing — Silk & Velvet Events';
-const description = 'Five service tiles starting at $350 — full planning, day-of, design, balloons, à la carte. NYC, Long Island, and New Jersey.';
+const title = 'Services — Silk & Velvet Events';
+const description = 'Full-service planning, day-of coordination, event design, balloon décor, and à la carte support across New York City, Long Island, and New Jersey.';
+
+const groups = (await getCollection('service-groups')).sort((a, b) => a.data.order - b.data.order);
+const services = await getCollection('services');
 ---
 
 <BaseLayout title={title} description={description}>
   <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
 
-  <section class="services-hub">
+  <section class="services-intro">
     <SectionHead
       as="h1"
       eyebrow="Services"
       title="Five places to <em>start.</em>"
-      sub="Pick a tile to see what's bundled, or scroll for the full breakdown of every service."
+      sub="Five ways we plug in — pick the one that matches where you are."
     />
-    <ServiceTiles />
   </section>
 
-  <section class="services-table">
-    <SectionHead
-      eyebrow="Full menu"
-      title="Every service, <em>itemized.</em>"
-      sub="Anything in the menu can be booked individually or stacked into a custom package."
-    />
-    <ServicesTable />
+  <section class="services-detail">
+    {groups.map((g) => (
+      <ServiceGroupSection
+        group={g}
+        services={services}
+        anchor={g.id.replace(/\.md$/, '')}
+      />
+    ))}
   </section>
 </BaseLayout>
 
 <style>
-  .services-hub { background: var(--paper); padding: 5rem 4rem; }
-  .services-table { padding: 5rem 4rem; }
+  .services-intro { padding: 5rem 4rem 1rem; }
+  .services-detail { padding: 1rem 4rem 5rem; }
   @media (max-width: 600px) {
-    .services-hub, .services-table { padding: 3.5rem 1.5rem; }
+    .services-intro { padding: 3.5rem 1.5rem 0.5rem; }
+    .services-detail { padding: 0.5rem 1.5rem 3.5rem; }
   }
 </style>

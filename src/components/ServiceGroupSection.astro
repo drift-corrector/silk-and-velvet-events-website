@@ -1,0 +1,226 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  group: CollectionEntry<'service-groups'>;
+  services: CollectionEntry<'services'>[];
+  anchor: string;
+}
+
+const { group, services, anchor } = Astro.props;
+const { Content } = await group.render();
+const bundled = group.data.services
+  .map((sSlug) => services.find((s) => s.id.replace(/\.md$/, '') === sSlug))
+  .filter((s): s is CollectionEntry<'services'> => Boolean(s));
+
+const photo = group.data.photo;
+const caption = group.data.photoCaption;
+---
+
+<section class={`group group--${anchor}`} id={anchor}>
+  <figure class="group__media">
+    {photo ? (
+      <img class="group__photo group__photo--img" src={photo} alt={`${group.data.title} — Silk & Velvet Events`} loading="lazy" decoding="async" />
+    ) : (
+      <div class="group__photo" aria-hidden="true"></div>
+    )}
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+
+  <div class="group__content">
+    <div class="group__head">
+      <p class="group__eyebrow">{group.data.eyebrowTag}</p>
+      <h2 class="group__title">{group.data.title}</h2>
+      <div class="group__lede"><Content /></div>
+    </div>
+
+    <div class="group__included">
+      <h3>What's included</h3>
+      <ul>
+        {bundled.map((s) => (
+          <li>
+            <strong>{s.data.shortName ?? s.data.title}</strong>
+            <span>{s.data.description}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="group__pricing">
+      <p class="group__pricing-note">Every event is different. Quotes are built around your scope, materials, and labor — not a fixed package.</p>
+      <a class="group__cta" href="/contact/">Get a quote →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .group {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    scroll-margin-top: 90px;
+  }
+  .group:not(:first-of-type) {
+    border-top: 1px solid color-mix(in oklch, var(--ink) 8%, transparent);
+  }
+  .group:nth-of-type(even) .group__media { order: 2; }
+
+  .group__media {
+    margin: 0;
+    position: relative;
+  }
+  .group__photo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+  .group__photo--img {
+    object-fit: cover;
+    display: block;
+  }
+  .group__media figcaption {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.25rem;
+    color: var(--cream);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    background: color-mix(in oklch, var(--ink) 35%, transparent);
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    backdrop-filter: blur(8px);
+  }
+
+  .group--whole-thing .group__photo {
+    background:
+      radial-gradient(circle at 70% 25%, color-mix(in oklch, var(--gold) 45%, transparent), transparent 55%),
+      linear-gradient(150deg, var(--pink), var(--blush) 55%, var(--tan));
+  }
+  .group--day-of .group__photo {
+    background:
+      radial-gradient(circle at 25% 80%, color-mix(in oklch, var(--burgundy) 25%, transparent), transparent 60%),
+      linear-gradient(200deg, var(--cream), var(--blush) 50%, var(--gold));
+  }
+  .group--pretty-part .group__photo {
+    background:
+      radial-gradient(circle at 80% 70%, color-mix(in oklch, var(--burgundy) 30%, transparent), transparent 50%),
+      linear-gradient(135deg, var(--pink), var(--pink) 30%, var(--blush));
+  }
+  .group--balloon .group__photo {
+    background:
+      radial-gradient(circle at 30% 30%, color-mix(in oklch, var(--burgundy) 35%, transparent), transparent 55%),
+      linear-gradient(220deg, var(--pink), var(--blush) 40%, var(--burgundy) 110%);
+  }
+  .group--pick-choose .group__photo {
+    background:
+      radial-gradient(circle at 60% 40%, color-mix(in oklch, var(--gold) 35%, transparent), transparent 55%),
+      linear-gradient(170deg, var(--cream), var(--pink) 70%, var(--blush));
+  }
+
+  .group__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .group__head { max-width: 540px; }
+  .group__eyebrow {
+    color: var(--burgundy);
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+  .group__title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(1.85rem, 3.6vw, 2.6rem);
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 1rem;
+  }
+  .group__lede :global(p) {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .group__included h3 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin: 0 0 0.75rem;
+  }
+  .group__included ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .group__included li {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .group__included li:last-child { border-bottom: none; }
+  .group__included li strong {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .group__included li span {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .group__pricing {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed color-mix(in oklch, var(--gold) 50%, transparent);
+  }
+  .group__pricing-note {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 50ch;
+  }
+  .group__cta {
+    align-self: flex-start;
+    padding: 0.75rem 1.4rem;
+    background: var(--burgundy);
+    color: var(--cream);
+    border-radius: var(--r-pill);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 200ms, transform 200ms;
+  }
+  .group__cta:hover {
+    background: oklch(0.36 0.16 5);
+    transform: translateY(-1px);
+  }
+  @media (max-width: 880px) {
+    .group {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 3.5rem 0;
+    }
+    .group:nth-of-type(even) .group__media { order: 0; }
+  }
+</style>

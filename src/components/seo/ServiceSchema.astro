@@ -5,11 +5,10 @@ import { ORG } from '~/lib/seo';
 interface Props {
   name: string;
   description: string;
-  priceFrom: number;
   url: string;
   serviceType?: string;
 }
-const { name, description, priceFrom, url, serviceType = 'Event Planning' } = Astro.props;
+const { name, description, url, serviceType = 'Event Planning' } = Astro.props;
 
 const data = {
   '@type': 'Service',
@@ -19,17 +18,6 @@ const data = {
   url,
   provider: { '@id': `${ORG.url}/#organization` },
   areaServed: ORG.serviceArea.map((n) => ({ '@type': 'Place', name: n })),
-  offers: {
-    '@type': 'Offer',
-    priceCurrency: 'USD',
-    price: priceFrom,
-    priceSpecification: {
-      '@type': 'PriceSpecification',
-      priceCurrency: 'USD',
-      minPrice: priceFrom,
-    },
-    availability: 'https://schema.org/InStock',
-  },
 };
 ---
 

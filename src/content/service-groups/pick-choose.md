@@ -9,7 +9,7 @@ services:
   - budget-management
   - venue-selection
 description: À la carte planning. Pick the pieces that fill your gaps.
-ctaLabel: Inquire
+ctaLabel: Learn more
 ---
 
 For couples who know exactly what they need help with. Vendor coordination, timeline building, budget tracking, venue selection — book any one or stack them.

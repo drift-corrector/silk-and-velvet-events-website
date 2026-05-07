@@ -2,28 +2,18 @@
 interface Props {
   tag: string;
   name: string;
-  priceFrom: number;
-  bullets: string[];
+  description: string;
   href?: string;
   ctaLabel?: string;
 }
-const { tag, name, priceFrom, bullets, href = '#', ctaLabel = 'Inquire' } = Astro.props;
-const formatted = priceFrom.toLocaleString('en-US');
-const isAnchor = href === '#' || href.startsWith('#');
+const { tag, name, description, href = '/services/', ctaLabel = 'Learn more' } = Astro.props;
 ---
 
 <div class="card">
   <span class="card__tag">{tag}</span>
   <h3 class="card__name">{name}</h3>
-  <p class="card__price">From <strong>${formatted}</strong></p>
-  <ul class="card__list">
-    {bullets.map((b) => <li>{b}</li>)}
-  </ul>
-  {isAnchor ? (
-    <a class="card__cta" href={href} data-open-widget>{ctaLabel}</a>
-  ) : (
-    <a class="card__cta" href={href}>{ctaLabel}</a>
-  )}
+  <p class="card__desc">{description}</p>
+  <a class="card__cta" href={href}>{ctaLabel}</a>
 </div>
 
 <style>
@@ -60,29 +50,12 @@ const isAnchor = href === '#' || href.startsWith('#');
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
-  .card__price {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--burgundy);
-    margin: 0;
-  }
-  .card__price strong { font-style: normal; font-size: 1.3rem; font-weight: 500; }
-  .card__list {
-    list-style: none;
-    padding: 0; margin: 0;
-    font-size: 0.88rem;
-    line-height: 1.7;
+  .card__desc {
+    font-size: 0.95rem;
+    line-height: 1.55;
     color: var(--ink-soft);
+    margin: 0;
     flex: 1;
-  }
-  .card__list li { display: flex; align-items: center; gap: 8px; }
-  .card__list li::before {
-    content: '';
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: var(--gold);
-    flex: 0 0 auto;
   }
   .card__cta {
     margin-top: auto;

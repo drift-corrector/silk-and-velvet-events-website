@@ -35,6 +35,8 @@ const serviceGroups = defineCollection({
     services: z.array(z.string()).min(1),
     description: z.string(),
     ctaLabel: z.string().default('Inquire'),
+    photo: z.string().optional(),
+    photoCaption: z.string().optional(),
   }),
 });
 
