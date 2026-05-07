@@ -1,0 +1,46 @@
+---
+type Props = {
+  eyebrow?: string;
+  title: string;
+  sub?: string;
+  as?: 'h1' | 'h2';
+};
+const { eyebrow, title, sub, as: Tag = 'h2' } = Astro.props as Props;
+---
+
+<div class="head">
+  {eyebrow && <p class="head__eyebrow">{eyebrow}</p>}
+  <Tag class="head__title" set:html={title} />
+  {sub && <p class="head__sub">{sub}</p>}
+</div>
+
+<style>
+  .head {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .head__eyebrow {
+    color: var(--burgundy);
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .head__title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    margin: 0 0 0.75rem;
+  }
+  .head__title :global(em) {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--burgundy);
+  }
+  .head__sub { font-size: 1.05rem; color: var(--ink-soft); margin: 0; }
+</style>

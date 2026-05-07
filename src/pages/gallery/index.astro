@@ -1,0 +1,76 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+
+const title = 'Gallery — Silk & Velvet Events';
+const description = 'Recent weddings, milestone celebrations, and balloon installs by Silk & Velvet Events across NYC, Long Island, and New Jersey.';
+
+const categories = [
+  { slug: 'wedding-details', label: 'Wedding Details', sub: 'Tablescapes, florals, ceremony moments.', variant: 2 },
+  { slug: 'event-decor', label: 'Event Decor', sub: 'Showers, milestones, holiday parties.', variant: 5 },
+  { slug: 'balloon-decor', label: 'Balloon Decor', sub: 'Arches, organics, ceiling installs.', variant: 4 },
+] as const;
+---
+
+<BaseLayout title={title} description={description}>
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <section class="gallery-hub">
+    <SectionHead
+      as="h1"
+      eyebrow="Gallery"
+      title="Recent work, <em>by category.</em>"
+      sub="Three streams — weddings, events, balloons. Pick a thread."
+    />
+
+    <div class="cats">
+      {categories.map((c) => (
+        <a class={`cat photo--${c.variant}`} href={`/gallery/${c.slug}/`}>
+          <div class="cat__overlay">
+            <h2>{c.label}</h2>
+            <p>{c.sub}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .gallery-hub { padding: 5rem 4rem; }
+  .cats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .cat {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-lg);
+    position: relative;
+    overflow: hidden;
+    transition: transform 320ms ease;
+    background: var(--blush);
+  }
+  .cat:hover { transform: scale(1.01); }
+  .cat__overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, color-mix(in oklch, var(--ink) 75%, transparent), transparent);
+    color: var(--cream);
+  }
+  .cat__overlay h2 {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    margin: 0 0 0.25rem;
+    font-weight: 400;
+  }
+  .cat__overlay p { margin: 0; font-size: 0.92rem; opacity: 0.9; }
+  .photo--2 { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-soft)); }
+  .photo--4 { background: linear-gradient(140deg, var(--gold), var(--tan)); }
+  .photo--5 { background: linear-gradient(170deg, var(--pink), var(--gold)); }
+  @media (max-width: 880px) { .cats { grid-template-columns: 1fr; } .gallery-hub { padding: 3.5rem 1.5rem; } }
+</style>

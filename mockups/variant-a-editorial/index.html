@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Silk & Velvet Events — Variant A · Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --burgundy: oklch(0.42 0.16 5);
+    --burgundy-deep: oklch(0.32 0.14 5);
+    --gold: oklch(0.74 0.13 80);
+    --gold-deep: oklch(0.62 0.12 75);
+    --pink: oklch(0.89 0.05 5);
+    --blush: oklch(0.83 0.06 35);
+    --tan: oklch(0.77 0.08 60);
+    --cream: oklch(0.98 0.012 70);
+    --paper: oklch(0.96 0.02 65);
+    --ink: oklch(0.22 0.05 5);
+    --rule: color-mix(in oklch, var(--gold) 60%, transparent);
+
+    --serif: 'Noto Serif Display', 'Cormorant', Georgia, serif;
+    --script: 'Halimun', 'Pinyon Script', cursive;
+    --sans: 'Glacial Indifference', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2rem;
+    --space-5: 3rem;
+    --space-6: 4.5rem;
+    --space-7: 6.5rem;
+    --space-8: 9rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  a { color: inherit; }
+
+  /* ===== Header ===== */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-2) var(--space-4);
+    background: color-mix(in oklch, var(--cream) 92%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid color-mix(in oklch, var(--ink) 8%, transparent);
+  }
+  .nav__brand {
+    font-family: var(--script);
+    font-size: 1.65rem;
+    color: var(--burgundy);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+  }
+  .nav__brand small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-top: 4px;
+  }
+  .nav__links {
+    display: flex;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0; padding: 0;
+    justify-content: center;
+  }
+  .nav__links a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms ease, color 200ms ease;
+  }
+  .nav__links a:hover { color: var(--burgundy); border-bottom-color: var(--gold); }
+  .nav__cta {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.4rem;
+    background: var(--burgundy);
+    color: var(--cream);
+    border: 1px solid var(--burgundy);
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .nav__cta:hover { background: var(--burgundy-deep); }
+
+  @media (max-width: 880px) {
+    .nav__links { display: none; }
+    .nav { grid-template-columns: 1fr auto; }
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    min-height: calc(100vh - 80px);
+    align-items: stretch;
+  }
+  .hero__photo {
+    position: relative;
+    background:
+      radial-gradient(circle at 30% 70%, color-mix(in oklch, var(--blush) 60%, transparent), transparent 60%),
+      linear-gradient(135deg, var(--pink) 0%, var(--blush) 50%, var(--tan) 100%);
+    overflow: hidden;
+  }
+  .hero__photo::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 30%, color-mix(in oklch, var(--burgundy) 25%, transparent), transparent 50%),
+      radial-gradient(ellipse at 20% 80%, color-mix(in oklch, var(--gold) 30%, transparent), transparent 55%);
+    mix-blend-mode: multiply;
+  }
+  .hero__photo::after {
+    content: 'Hudson Valley · Wedding · 2025';
+    position: absolute; left: var(--space-4); bottom: var(--space-4);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    z-index: 1;
+  }
+  .hero__caption {
+    position: absolute;
+    top: var(--space-4); right: var(--space-4);
+    z-index: 1;
+    width: 6px; height: 6px;
+    background: var(--cream);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--cream) 30%, transparent);
+  }
+  .hero__copy {
+    padding: var(--space-7) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--cream);
+  }
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin: 0 0 var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    flex: 0 0 auto;
+    width: 24px; height: 1px;
+    background: var(--gold);
+  }
+  .eyebrow::after { display: none; }
+  .hero__headline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    color: var(--burgundy);
+    margin: 0 0 var(--space-3);
+  }
+  .hero__headline em {
+    font-style: normal;
+    color: var(--ink);
+  }
+  .hero__lead {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 1.55;
+    max-width: 38ch;
+    color: var(--ink);
+    margin: var(--space-3) 0 var(--space-4);
+  }
+  .hero__rule {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: var(--space-3) 0 var(--space-4);
+  }
+  .hero__meta {
+    display: flex;
+    gap: var(--space-4);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .hero__meta span { opacity: 0.7; }
+
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero__photo { aspect-ratio: 4 / 5; }
+    .hero__copy { padding: var(--space-5) var(--space-4); }
+  }
+
+  /* ===== Section frame ===== */
+  section { padding: var(--space-8) var(--space-5); }
+  .section__head {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-5);
+    align-items: end;
+    margin-bottom: var(--space-6);
+    max-width: 1400px;
+    margin-left: auto; margin-right: auto;
+  }
+  .section__title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 0.95;
+    color: var(--burgundy);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .section__intro {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--ink);
+    max-width: 50ch;
+    line-height: 1.55;
+  }
+  @media (max-width: 880px) {
+    .section__head { grid-template-columns: 1fr; }
+    section { padding: var(--space-6) var(--space-4); }
+  }
+
+  /* ===== Services ===== */
+  .services {
+    background: var(--cream);
+  }
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+  .tier {
+    padding: var(--space-5) var(--space-3);
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background: var(--cream);
+    transition: background 200ms ease;
+  }
+  .tier:last-child { border-right: 0; }
+  .tier:hover { background: color-mix(in oklch, var(--pink) 30%, var(--cream)); }
+  .tier__num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--gold-deep);
+  }
+  .tier__name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.85rem;
+    line-height: 1.05;
+    color: var(--burgundy);
+    font-weight: 400;
+    margin: 0;
+  }
+  .tier__price {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink);
+    margin: 0;
+  }
+  .tier__price strong {
+    font-weight: 500;
+    font-size: 1.05rem;
+  }
+  .tier__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: color-mix(in oklch, var(--ink) 80%, transparent);
+    flex: 1;
+  }
+  .tier__list li {
+    padding: 6px 0;
+    border-top: 1px dotted color-mix(in oklch, var(--ink) 15%, transparent);
+  }
+  .tier__list li:first-child { border-top: 0; }
+  .tier__cta {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    text-decoration: none;
+    margin-top: auto;
+    padding-top: var(--space-2);
+    display: inline-block;
+  }
+  .tier__cta::after {
+    content: ' →';
+    transition: margin-left 200ms ease;
+    display: inline-block;
+  }
+  .tier__cta:hover::after { margin-left: 6px; }
+
+  @media (max-width: 1100px) {
+    .services__grid { grid-template-columns: repeat(2, 1fr); }
+    .tier:nth-child(2) { border-right: 0; }
+  }
+  @media (max-width: 600px) {
+    .services__grid { grid-template-columns: 1fr; }
+    .tier { border-right: 0; }
+  }
+
+  /* ===== Gallery editorial grid ===== */
+  .gallery { background: var(--paper); }
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(180px, 1fr);
+    gap: var(--space-2);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--blush);
+  }
+  .frame::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 12px; left: 14px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .frame--1 { grid-column: 1 / 6; grid-row: span 2;
+    background: linear-gradient(160deg, var(--burgundy), var(--burgundy-deep));
+  }
+  .frame--2 { grid-column: 6 / 9;
+    background: linear-gradient(180deg, var(--blush), var(--tan));
+  }
+  .frame--3 { grid-column: 9 / 13;
+    background: linear-gradient(180deg, var(--pink), var(--blush));
+  }
+  .frame--4 { grid-column: 6 / 10; grid-row: 2;
+    background: linear-gradient(140deg, var(--gold), var(--tan));
+  }
+  .frame--5 { grid-column: 10 / 13; grid-row: 2;
+    background: linear-gradient(180deg, var(--burgundy), var(--blush));
+  }
+
+  @media (max-width: 880px) {
+    .gallery__grid { grid-template-columns: repeat(6, 1fr); }
+    .frame--1 { grid-column: 1 / 7; }
+    .frame--2 { grid-column: 1 / 4; grid-row: auto; }
+    .frame--3 { grid-column: 4 / 7; grid-row: auto; }
+    .frame--4 { grid-column: 1 / 4; grid-row: auto; }
+    .frame--5 { grid-column: 4 / 7; grid-row: auto; }
+  }
+
+  /* ===== Pull quote ===== */
+  .pull {
+    text-align: center;
+    padding: var(--space-8) var(--space-4);
+    background: var(--cream);
+  }
+  .pull__quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+    line-height: 1.3;
+    color: var(--burgundy);
+    max-width: 22ch;
+    margin: 0 auto var(--space-4);
+    letter-spacing: -0.01em;
+  }
+  .pull__quote::before, .pull__quote::after {
+    font-family: var(--script);
+    color: var(--gold);
+    font-size: 1.6em;
+    line-height: 0;
+    vertical-align: -0.1em;
+    padding: 0 0.1em;
+  }
+  .pull__quote::before { content: '“'; }
+  .pull__quote::after { content: '”'; }
+  .pull__attr {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+  .pull__attr::before {
+    content: '';
+    display: inline-block;
+    width: 30px; height: 1px;
+    background: var(--gold);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--burgundy-deep);
+    color: var(--cream);
+    padding: var(--space-7) var(--space-5) var(--space-4);
+  }
+  .foot__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-5);
+    max-width: 1400px;
+    margin: 0 auto var(--space-5);
+  }
+  .foot__brand {
+    font-family: var(--script);
+    font-size: 2.2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .foot__brand small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: color-mix(in oklch, var(--cream) 70%, transparent);
+    margin-top: 6px;
+  }
+  .foot__col h4 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 var(--space-2);
+  }
+  .foot__col ul {
+    list-style: none; padding: 0; margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.9;
+    font-family: var(--serif);
+  }
+  .foot__col a {
+    text-decoration: none;
+    color: color-mix(in oklch, var(--cream) 85%, transparent);
+    transition: color 200ms;
+  }
+  .foot__col a:hover { color: var(--gold); }
+  .foot__bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid color-mix(in oklch, var(--cream) 12%, transparent);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: color-mix(in oklch, var(--cream) 55%, transparent);
+  }
+
+  @media (max-width: 880px) {
+    .foot__grid { grid-template-columns: 1fr 1fr; }
+    .foot__brand { grid-column: 1 / -1; }
+    .foot__bottom { flex-direction: column; gap: var(--space-2); }
+  }
+
+  /* ===== Contact widget ===== */
+  .widget {
+    position: fixed;
+    inset: 0;
+    background: color-mix(in oklch, var(--ink) 50%, transparent);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3);
+  }
+  .widget[data-open="true"] {
+    display: flex;
+    animation: fade 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .widget__panel {
+    background: var(--cream);
+    width: 100%;
+    max-width: 480px;
+    padding: var(--space-5) var(--space-4);
+    text-align: center;
+    animation: rise 320ms cubic-bezier(0.22, 1, 0.36, 1);
+    border-top: 6px solid var(--gold);
+  }
+  @keyframes rise {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .widget__title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 2.2rem;
+    color: var(--burgundy);
+    margin: 0 0 var(--space-1);
+    line-height: 1;
+  }
+  .widget__sub {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin: 0 0 var(--space-4);
+  }
+  .widget__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: color-mix(in oklch, var(--ink) 10%, transparent);
+    border: 1px solid color-mix(in oklch, var(--ink) 10%, transparent);
+  }
+  .widget__list a {
+    background: var(--cream);
+    padding: var(--space-3);
+    text-decoration: none;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 180ms;
+  }
+  .widget__list a:hover {
+    background: color-mix(in oklch, var(--pink) 35%, var(--cream));
+  }
+  .widget__list span {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+  .widget__close {
+    margin-top: var(--space-3);
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.5;
+  }
+  .widget__close:hover { opacity: 1; color: var(--burgundy); }
+
+  /* ===== Variant tag ===== */
+  .tag {
+    position: fixed;
+    bottom: 16px; left: 16px;
+    z-index: 60;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    background: var(--cream);
+    padding: 6px 10px;
+    border: 1px solid var(--rule);
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="#" class="nav__brand">Silk &amp; Velvet<small>Events &amp; Design</small></a>
+  <nav>
+    <ul class="nav__links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </nav>
+  <button class="nav__cta" data-open-widget>Contact Us</button>
+</header>
+
+<section class="hero">
+  <div class="hero__photo">
+    <span class="hero__caption"></span>
+  </div>
+  <div class="hero__copy">
+    <p class="eyebrow">Silk &amp; Velvet · Est. NYC</p>
+    <h1 class="hero__headline"><em>Unforgettable</em><br />is a feeling.</h1>
+    <p class="hero__lead">Full-service event design and balloon decor for weddings, milestone celebrations, and the in-between. Serving New York City, Long Island, and New Jersey since 2018.</p>
+    <div class="hero__rule"></div>
+    <div class="hero__meta">
+      <span>NYC</span><span>·</span><span>Long Island</span><span>·</span><span>New Jersey</span>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section__head">
+    <h2 class="section__title">Four ways<br />to begin.</h2>
+    <p class="section__intro">Every package is customizable. These are the starting points — pick the closest fit and we'll tailor it to your event during your design consultation.</p>
+  </div>
+  <div class="services__grid">
+    <div class="tier">
+      <span class="tier__num">i.</span>
+      <h3 class="tier__name">The Whole Thing</h3>
+      <p class="tier__price">From <strong>$4,000</strong></p>
+      <ul class="tier__list">
+        <li>Full-Service Planning</li>
+        <li>Vendor coordination</li>
+        <li>Timeline &amp; logistics</li>
+        <li>Design &amp; styling</li>
+        <li>Budget management</li>
+      </ul>
+      <a class="tier__cta" href="#contact" data-open-widget>Inquire</a>
+    </div>
+    <div class="tier">
+      <span class="tier__num">ii.</span>
+      <h3 class="tier__name">The Day Of</h3>
+      <p class="tier__price">From <strong>$1,500</strong></p>
+      <ul class="tier__list">
+        <li>Day-of Coordination</li>
+        <li>Rehearsal Coordination</li>
+        <li>Run-of-show oversight</li>
+        <li>Vendor handoff</li>
+      </ul>
+      <a class="tier__cta" href="#contact" data-open-widget>Inquire</a>
+    </div>
+    <div class="tier">
+      <span class="tier__num">iii.</span>
+      <h3 class="tier__name">Just the Pretty Part</h3>
+      <p class="tier__price">From <strong>$350</strong></p>
+      <ul class="tier__list">
+        <li>Event Design &amp; Styling</li>
+        <li>Decor Packages</li>
+        <li>Balloon Décor</li>
+        <li>On-site installation</li>
+      </ul>
+      <a class="tier__cta" href="#contact" data-open-widget>Inquire</a>
+    </div>
+    <div class="tier">
+      <span class="tier__num">iv.</span>
+      <h3 class="tier__name">Pick &amp; Choose</h3>
+      <p class="tier__price">From <strong>$500</strong></p>
+      <ul class="tier__list">
+        <li>Vendor Coordination</li>
+        <li>Timeline &amp; Logistics</li>
+        <li>Budget Management</li>
+        <li>Venue Selection</li>
+      </ul>
+      <a class="tier__cta" href="#contact" data-open-widget>Inquire</a>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="section__head">
+    <h2 class="section__title">A few<br />recent rooms.</h2>
+    <p class="section__intro">Weddings, bachelorettes, milestone birthdays, holiday installations. Each project is documented from setup to send-off.</p>
+  </div>
+  <div class="gallery__grid">
+    <div class="frame frame--1" data-label="Wedding · Long Island · 2025"></div>
+    <div class="frame frame--2" data-label="Balloon stack · Brooklyn"></div>
+    <div class="frame frame--3" data-label="Dessert table · Englewood"></div>
+    <div class="frame frame--4" data-label="Bachelorette · Hoboken"></div>
+    <div class="frame frame--5" data-label="Holiday · Manhattan"></div>
+  </div>
+</section>
+
+<section class="pull" id="reviews">
+  <p class="pull__quote">She made our wedding day genuinely effortless. Every detail, every vendor, every flower — handled.</p>
+  <p class="pull__attr">Inna A. · Wedding · 2024</p>
+</section>
+
+<footer>
+  <div class="foot__grid">
+    <div>
+      <div class="foot__brand">Silk &amp; Velvet<small>Events &amp; Design</small></div>
+      <p style="font-family: var(--serif); font-size: 0.95rem; max-width: 32ch; margin-top: var(--space-3); opacity: 0.85;">Where creativity meets elegance, making your vision unforgettable.</p>
+    </div>
+    <div class="foot__col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#process">Process</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>Reach</h4>
+      <ul>
+        <li><a href="sms:+16468208418">Text · 646.820.8418</a></li>
+        <li><a href="https://instagram.com/silkandvelvet_events">Instagram</a></li>
+        <li><a href="https://facebook.com/SilkandVelvetEvents">Facebook</a></li>
+        <li><a href="mailto:silk.and.velvet.events1@gmail.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>Service Area</h4>
+      <ul>
+        <li>New York City</li>
+        <li>Long Island</li>
+        <li>New Jersey</li>
+        <li>Travel by request</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__bottom">
+    <span>© 2026 Silk &amp; Velvet Events</span>
+    <span>Made in NYC</span>
+  </div>
+</footer>
+
+<div class="widget" data-widget>
+  <div class="widget__panel" role="dialog" aria-label="Contact options">
+    <h3 class="widget__title">Tell us<br />about your day.</h3>
+    <p class="widget__sub">Pick how you'd like to reach us</p>
+    <div class="widget__list">
+      <a href="sms:+16468208418?body=Hi%20Sofiya%2C%20I%27d%20love%20to%20chat%20about%20an%20event%20...">Text Sofiya<span>SMS</span></a>
+      <a href="https://wa.me/16468208418?text=Hi%20Sofiya%2C%20I%27d%20love%20to%20chat%20about%20an%20event%20...">WhatsApp<span>WA</span></a>
+      <a href="https://instagram.com/silkandvelvet_events">Instagram DM<span>IG</span></a>
+      <a href="https://m.me/SilkandVelvetEvents">Messenger<span>FB</span></a>
+      <a href="mailto:silk.and.velvet.events1@gmail.com?subject=Event%20inquiry">Email<span>@</span></a>
+      <a href="#contact">Inquiry form<span>↓</span></a>
+    </div>
+    <button class="widget__close" data-close-widget>Close</button>
+  </div>
+</div>
+
+<div class="tag">Variant A · Editorial</div>
+
+<script>
+  const widget = document.querySelector('[data-widget]');
+  document.querySelectorAll('[data-open-widget]').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); widget.dataset.open = 'true'; });
+  });
+  document.querySelectorAll('[data-close-widget]').forEach(el => {
+    el.addEventListener('click', () => widget.removeAttribute('data-open'));
+  });
+  widget.addEventListener('click', e => { if (e.target === widget) widget.removeAttribute('data-open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') widget.removeAttribute('data-open'); });
+</script>
+
+</body>
+</html>

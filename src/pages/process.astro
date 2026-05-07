@@ -1,0 +1,49 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import ProcessStrip from '~/components/ProcessStrip.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+
+const title = 'Process — Silk & Velvet Events';
+const description = 'How working with Silk & Velvet works, from inquiry through teardown — four steps, predictable timelines, no surprises.';
+---
+
+<BaseLayout title={title} description={description}>
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <section class="process">
+    <SectionHead
+      as="h1"
+      eyebrow="Process"
+      title="Four steps, <em>start to celebrate.</em>"
+      sub="The same flow whether you're booking full planning or a single balloon install. Just scaled to your event."
+    />
+    <ProcessStrip />
+
+    <div class="process__notes">
+      <h2>What to expect at each step</h2>
+      <ol>
+        <li><strong>Inquire.</strong> Submit the contact form or text Sofiya. We reply within 1–2 business days with a custom quote and a 30-minute discovery call slot.</li>
+        <li><strong>Design Consult.</strong> 30–60 minute call to lock the vision. We send the contract and retainer invoice within 24 hours. Date holds the moment retainer clears.</li>
+        <li><strong>Setup.</strong> We arrive on-site at the agreed window. Setup is fully managed — you don't lift a finger. For balloon-only events this is the bulk of the work.</li>
+        <li><strong>Celebrate.</strong> The team stays through the event when coordination is booked, or steps out post-install for decor/balloon-only. Teardown is included.</li>
+      </ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .process { padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .process__notes { margin-top: 4rem; }
+  .process__notes h2 {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    color: var(--ink);
+    font-weight: 400;
+    margin: 0 0 1.5rem;
+  }
+  .process__notes ol { padding-left: 1.25rem; color: var(--ink-soft); font-size: 1rem; line-height: 1.65; }
+  .process__notes li { margin-bottom: 1rem; }
+  .process__notes strong { color: var(--ink); font-weight: 500; }
+  @media (max-width: 600px) { .process { padding: 3.5rem 1.5rem; } }
+</style>

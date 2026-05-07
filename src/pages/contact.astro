@@ -1,0 +1,180 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import LocalBusinessSchema from '~/components/seo/LocalBusinessSchema.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+import { CONTACT_CHANNELS, PHONE_DISPLAY, EMAIL } from '~/lib/contact';
+
+const title = 'Contact — Silk & Velvet Events';
+const description = "Reach Sofiya by text, Instagram, Messenger, or email. We reply within 1–2 business days. Serving NYC, Long Island, and New Jersey.";
+const FORMSPREE_ID = (import.meta.env.PUBLIC_FORMSPREE_ID as string | undefined) ?? '';
+const formAction = FORMSPREE_ID ? `https://formspree.io/f/${FORMSPREE_ID}` : '#';
+---
+
+<BaseLayout title={title} description={description}>
+  <LocalBusinessSchema slot="head" />
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <section class="contact">
+    <SectionHead
+      as="h1"
+      eyebrow="Contact"
+      title="Tell us about your <em>event.</em>"
+      sub="Sofiya replies fastest by text. The form below works too — quote turnaround is 1–2 business days."
+    />
+
+    <div class="contact__grid">
+      <div class="contact__channels">
+        <h2 class="channels__title">Pick a channel</h2>
+        <ul class="channels__list">
+          {CONTACT_CHANNELS.map((c) => (
+            <li>
+              <a class="channel" href={c.href}>
+                <span class="channel__icon" aria-hidden="true">{c.icon}</span>
+                <span>
+                  <strong>{c.label}</strong>
+                  <em>
+                    {c.id === 'text' && PHONE_DISPLAY}
+                    {c.id === 'email' && EMAIL}
+                    {c.id === 'instagram' && '@silkandvelvet_events'}
+                    {c.id === 'messenger' && 'm.me/SilkandVelvetEvents'}
+                  </em>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <form class="contact__form" action={formAction} method="POST" novalidate>
+        <h2 class="form__title">Or fill out the inquiry form</h2>
+        <div class="form__row">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div class="form__row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="form__row">
+          <label for="phone">Phone (optional)</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" />
+        </div>
+        <div class="form__row form__row--two">
+          <div>
+            <label for="event-type">Event type</label>
+            <select id="event-type" name="event-type">
+              <option>Wedding</option>
+              <option>Milestone party</option>
+              <option>Baby / bridal shower</option>
+              <option>Birthday</option>
+              <option>Corporate / Holiday</option>
+              <option>Balloon-only install</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="event-date">Event date</label>
+            <input id="event-date" name="event-date" type="date" />
+          </div>
+        </div>
+        <div class="form__row">
+          <label for="message">Tell us a little more</label>
+          <textarea id="message" name="message" rows="5" placeholder="Guest count, venue (if known), what you'd love help with…"></textarea>
+        </div>
+        <button class="form__submit" type="submit" disabled={!FORMSPREE_ID}>
+          {FORMSPREE_ID ? 'Send inquiry →' : 'Form coming soon'}
+        </button>
+        {!FORMSPREE_ID && (
+          <p class="form__note">Form submissions are routed once Sofiya provisions Formspree. Until then, please use a channel above.</p>
+        )}
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact { padding: 5rem 4rem; }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .channels__title, .form__title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin: 0 0 1.5rem;
+    font-weight: 400;
+  }
+  .channels__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 1rem 1.25rem;
+    border-radius: var(--r-md);
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--ink) 8%, transparent);
+    transition: all 180ms;
+  }
+  .channel:hover { border-color: var(--burgundy); background: var(--pink-soft); }
+  .channel__icon {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--pink-soft);
+    display: grid; place-items: center;
+    font-size: 1.1rem;
+    flex: 0 0 auto;
+  }
+  .channel strong { display: block; font-weight: 500; color: var(--ink); }
+  .channel em { font-style: normal; font-size: 0.85rem; color: var(--ink-soft); }
+  .contact__form {
+    background: var(--cream);
+    padding: 2rem;
+    border-radius: var(--r-lg);
+    border: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+  }
+  .form__row { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .form__row--two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form__row--two > div { display: flex; flex-direction: column; gap: 0.4rem; }
+  label { font-size: 0.82rem; color: var(--ink-soft); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
+  input, select, textarea {
+    font: inherit;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid color-mix(in oklch, var(--ink) 15%, transparent);
+    border-radius: var(--r-sm);
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--burgundy);
+    outline-offset: 2px;
+    border-color: var(--burgundy);
+  }
+  textarea { resize: vertical; }
+  .form__submit {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: var(--burgundy);
+    color: var(--cream);
+    border: none;
+    border-radius: var(--r-pill);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    transition: all 200ms;
+  }
+  .form__submit:hover:not(:disabled) { background: oklch(0.36 0.16 5); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .form__submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .form__note { font-size: 0.82rem; color: var(--ink-soft); margin-top: 0.75rem; text-align: center; }
+  @media (max-width: 880px) {
+    .contact { padding: 3.5rem 1.5rem; }
+    .contact__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form__row--two { grid-template-columns: 1fr; }
+  }
+</style>

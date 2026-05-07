@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Silk & Velvet Events — Variant B · Modern Soft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --burgundy: oklch(0.42 0.16 5);
+    --burgundy-soft: oklch(0.52 0.13 5);
+    --gold: oklch(0.74 0.13 80);
+    --pink: oklch(0.89 0.05 5);
+    --pink-soft: oklch(0.95 0.022 5);
+    --blush: oklch(0.83 0.06 35);
+    --tan: oklch(0.77 0.08 60);
+    --cream: oklch(0.985 0.01 70);
+    --paper: oklch(0.97 0.018 30);
+    --ink: oklch(0.28 0.045 5);
+    --ink-soft: oklch(0.45 0.03 5);
+
+    --serif: 'Noto Serif Display', 'Cormorant', Georgia, serif;
+    --script: 'Halimun', 'Pinyon Script', cursive;
+    --sans: 'Glacial Indifference', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+
+    --r-sm: 8px;
+    --r-md: 16px;
+    --r-lg: 24px;
+    --r-xl: 32px;
+    --r-pill: 999px;
+
+    --shadow-sm: 0 1px 2px rgba(150, 23, 80, 0.06), 0 2px 8px rgba(150, 23, 80, 0.04);
+    --shadow-md: 0 4px 12px rgba(150, 23, 80, 0.08), 0 12px 32px rgba(150, 23, 80, 0.05);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ===== Header ===== */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 1.75rem;
+    background: color-mix(in oklch, var(--cream) 88%, transparent);
+    backdrop-filter: saturate(140%) blur(14px);
+  }
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--burgundy);
+    letter-spacing: -0.01em;
+  }
+  .nav__monogram {
+    width: 36px; height: 36px;
+    background: var(--burgundy);
+    color: var(--cream);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+  }
+  .nav__brand small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .nav__links {
+    display: flex;
+    gap: 1.75rem;
+    list-style: none;
+    margin: 0; padding: 0;
+    justify-content: center;
+  }
+  .nav__links a {
+    font-size: 0.92rem;
+    color: var(--ink);
+    padding: 6px 0;
+    border-bottom: 1.5px solid transparent;
+    transition: border-color 200ms, color 200ms;
+  }
+  .nav__links a:hover { color: var(--burgundy); border-bottom-color: var(--burgundy); }
+  .nav__cta {
+    background: var(--burgundy);
+    color: var(--cream);
+    border: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--r-pill);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 200ms, transform 200ms;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav__cta:hover { background: oklch(0.36 0.16 5); transform: translateY(-1px); }
+  @media (max-width: 880px) {
+    .nav__links { display: none; }
+    .nav { grid-template-columns: 1fr auto; }
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 4rem 4rem 6rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .hero__copy { display: flex; flex-direction: column; gap: 1.25rem; }
+  .pill {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--pink);
+    color: var(--burgundy);
+    border-radius: var(--r-pill);
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--burgundy);
+  }
+  .hero__headline {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .hero__headline em {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--burgundy);
+    font-weight: 400;
+  }
+  .hero__lead {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 38ch;
+    margin: 0;
+  }
+  .hero__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--r-pill);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    transition: all 200ms;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn--primary {
+    background: var(--burgundy);
+    color: var(--cream);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn--primary:hover { background: oklch(0.36 0.16 5); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid color-mix(in oklch, var(--ink) 18%, transparent);
+  }
+  .btn--ghost:hover { background: var(--pink-soft); border-color: var(--burgundy); color: var(--burgundy); }
+  .btn::after { content: '→'; transition: margin-left 200ms; }
+  .btn:hover::after { margin-left: 4px; }
+
+  .hero__photo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-xl);
+    background:
+      radial-gradient(circle at 70% 30%, color-mix(in oklch, var(--gold) 50%, transparent), transparent 55%),
+      linear-gradient(160deg, var(--pink), var(--blush) 60%, var(--tan));
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 80%, color-mix(in oklch, var(--burgundy) 20%, transparent), transparent 55%);
+    mix-blend-mode: multiply;
+  }
+  .hero__photo span {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.5rem;
+    color: var(--cream);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    background: color-mix(in oklch, var(--ink) 35%, transparent);
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    backdrop-filter: blur(8px);
+  }
+
+  .hero__metrics {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid color-mix(in oklch, var(--ink) 10%, transparent);
+  }
+  .metric { display: flex; flex-direction: column; gap: 4px; }
+  .metric strong {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.85rem;
+    color: var(--burgundy);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .metric span {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 4rem; }
+    .hero__metrics { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ===== Section heads ===== */
+  section { padding: 5rem 4rem; }
+  .head {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .head__eyebrow {
+    color: var(--burgundy);
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .head__title {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    margin: 0 0 0.75rem;
+  }
+  .head__title em {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--burgundy);
+  }
+  .head__sub { font-size: 1.05rem; color: var(--ink-soft); margin: 0; }
+
+  /* ===== Services tiles ===== */
+  .services { background: var(--paper); }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .card {
+    background: var(--cream);
+    border-radius: var(--r-lg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+    transition: transform 280ms ease, box-shadow 280ms ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .card__tag {
+    align-self: flex-start;
+    background: var(--pink);
+    color: var(--burgundy);
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .card__name {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    color: var(--ink);
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .card__price {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--burgundy);
+    margin: 0;
+  }
+  .card__price strong { font-style: normal; font-size: 1.45rem; font-weight: 500; }
+  .card__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+  .card__list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card__list li::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex: 0 0 auto;
+  }
+  .card__cta {
+    margin-top: auto;
+    padding: 0.7rem 1.2rem;
+    background: transparent;
+    border: 1px solid color-mix(in oklch, var(--burgundy) 30%, transparent);
+    border-radius: var(--r-pill);
+    color: var(--burgundy);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 200ms;
+  }
+  .card__cta:hover { background: var(--burgundy); color: var(--cream); border-color: var(--burgundy); }
+  @media (max-width: 1100px) {
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .tiles { grid-template-columns: 1fr; }
+    section { padding: 3.5rem 1.5rem; }
+  }
+
+  /* ===== Gallery uniform grid ===== */
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .photo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    position: relative;
+    background: var(--blush);
+    transition: transform 320ms ease;
+  }
+  .photo:hover { transform: scale(1.01); }
+  .photo span {
+    position: absolute;
+    bottom: 12px; left: 14px;
+    color: var(--cream);
+    font-size: 0.78rem;
+    background: color-mix(in oklch, var(--ink) 35%, transparent);
+    padding: 5px 11px;
+    border-radius: var(--r-pill);
+    backdrop-filter: blur(8px);
+  }
+  .photo--1 { background: linear-gradient(150deg, var(--blush), var(--tan)); }
+  .photo--2 { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-soft)); }
+  .photo--3 { background: linear-gradient(160deg, var(--pink), var(--blush)); }
+  .photo--4 { background: linear-gradient(140deg, var(--gold), var(--tan)); }
+  .photo--5 { background: linear-gradient(170deg, var(--pink), var(--gold)); }
+  .photo--6 { background: linear-gradient(180deg, var(--blush), var(--burgundy)); }
+  @media (max-width: 880px) { .gallery__grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ===== Reviews row ===== */
+  .reviews { background: var(--pink-soft); }
+  .reviews__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .review {
+    background: var(--cream);
+    padding: 2rem;
+    border-radius: var(--r-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid color-mix(in oklch, var(--ink) 5%, transparent);
+  }
+  .review__stars { color: var(--gold); font-size: 0.95rem; letter-spacing: 2px; }
+  .review__quote {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    flex: 1;
+  }
+  .review__attr {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 0.75rem;
+    border-top: 1px solid color-mix(in oklch, var(--ink) 8%, transparent);
+  }
+  .avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--blush));
+    display: grid; place-items: center;
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    color: var(--burgundy);
+    font-weight: 500;
+  }
+  .review__attr div { display: flex; flex-direction: column; }
+  .review__attr strong {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .review__attr span {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 880px) { .reviews__row { grid-template-columns: 1fr; } }
+
+  /* ===== Process strip ===== */
+  .process__row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .step {
+    background: var(--cream);
+    border-radius: var(--r-lg);
+    padding: 1.5rem;
+    border: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .step__num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .step__name {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+  }
+  .step__desc {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  @media (max-width: 880px) { .process__row { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 4rem 4rem 1.5rem;
+  }
+  .foot__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    max-width: 1320px;
+    margin: 0 auto 3rem;
+  }
+  .foot__brand {
+    display: flex; align-items: center; gap: 14px;
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--cream);
+  }
+  .foot__brand .nav__monogram {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .foot__col h4 {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 1rem;
+  }
+  .foot__col ul {
+    list-style: none; padding: 0; margin: 0;
+    font-size: 0.95rem;
+    line-height: 2;
+  }
+  .foot__col a { color: color-mix(in oklch, var(--cream) 80%, transparent); }
+  .foot__col a:hover { color: var(--gold); }
+  .foot__bottom {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in oklch, var(--cream) 10%, transparent);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: color-mix(in oklch, var(--cream) 50%, transparent);
+  }
+  @media (max-width: 880px) {
+    footer { padding: 3rem 1.5rem 1.5rem; }
+    .foot__grid { grid-template-columns: 1fr 1fr; }
+    .foot__brand { grid-column: 1 / -1; }
+    .foot__bottom { flex-direction: column; gap: 0.5rem; }
+  }
+
+  /* ===== Contact widget ===== */
+  .widget {
+    position: fixed; inset: 0;
+    background: color-mix(in oklch, var(--ink) 50%, transparent);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+  }
+  @media (min-width: 700px) {
+    .widget { align-items: center; }
+  }
+  .widget[data-open="true"] {
+    display: flex;
+    animation: fade 280ms ease;
+  }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .widget__panel {
+    background: var(--cream);
+    width: 100%;
+    max-width: 440px;
+    padding: 2rem;
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    animation: slide 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (min-width: 700px) {
+    .widget__panel { border-radius: var(--r-xl); }
+  }
+  @keyframes slide { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .widget__handle {
+    width: 40px; height: 4px;
+    background: color-mix(in oklch, var(--ink) 15%, transparent);
+    border-radius: 2px;
+    margin: 0 auto 1.25rem;
+  }
+  @media (min-width: 700px) { .widget__handle { display: none; } }
+  .widget__title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0 0 0.25rem;
+  }
+  .widget__title em { color: var(--burgundy); }
+  .widget__sub {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0 0 1.5rem;
+  }
+  .channels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.85rem 1rem;
+    border-radius: var(--r-md);
+    background: var(--pink-soft);
+    color: var(--ink);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: all 180ms;
+    border: 1px solid transparent;
+  }
+  .channel:hover {
+    background: var(--cream);
+    border-color: var(--burgundy);
+    color: var(--burgundy);
+    transform: translateY(-1px);
+  }
+  .channel__icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: grid; place-items: center;
+    font-size: 1rem;
+    flex: 0 0 auto;
+  }
+  .channel:hover .channel__icon { background: var(--pink); }
+  .channel--full { grid-column: 1 / -1; background: var(--burgundy); color: var(--cream); justify-content: center; }
+  .channel--full:hover { background: oklch(0.36 0.16 5); color: var(--cream); border-color: transparent; }
+
+  /* ===== Variant tag ===== */
+  .tag {
+    position: fixed;
+    bottom: 16px; left: 16px;
+    z-index: 60;
+    font-size: 0.72rem;
+    color: var(--cream);
+    background: var(--burgundy);
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="#" class="nav__brand">
+    <span class="nav__monogram">SV</span>
+    <span>Silk &amp; Velvet<small>Events &amp; Design</small></span>
+  </a>
+  <nav>
+    <ul class="nav__links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </nav>
+  <button class="nav__cta" data-open-widget>Contact Us</button>
+</header>
+
+<section class="hero">
+  <div class="hero__copy">
+    <span class="pill">Now booking 2026 weddings</span>
+    <h1 class="hero__headline">Plan less.<br /><em>Feel more.</em></h1>
+    <p class="hero__lead">Full-service event design and balloon decor for weddings, milestones, and celebrations across NYC, Long Island, and New Jersey.</p>
+    <div class="hero__actions">
+      <button class="btn btn--primary" data-open-widget>Get a quote</button>
+      <a class="btn btn--ghost" href="#gallery">See our work</a>
+    </div>
+  </div>
+  <div class="hero__photo"><span>Wedding · Long Island · 2025</span></div>
+  <div class="hero__metrics">
+    <div class="metric"><strong>200+</strong><span>Events styled</span></div>
+    <div class="metric"><strong>4–8 wks</strong><span>Avg. lead time</span></div>
+    <div class="metric"><strong>NY · NJ · LI</strong><span>Service area</span></div>
+    <div class="metric"><strong>1–2 days</strong><span>Quote turnaround</span></div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="head">
+    <p class="head__eyebrow">Services</p>
+    <h2 class="head__title">Pick a starting point. <em>We'll tailor the rest.</em></h2>
+    <p class="head__sub">Every package is fully customizable — these are just the easiest places to begin.</p>
+  </div>
+  <div class="tiles">
+    <div class="card">
+      <span class="card__tag">Most Popular</span>
+      <h3 class="card__name">The Whole Thing</h3>
+      <p class="card__price">From <strong>$4,000</strong></p>
+      <ul class="card__list">
+        <li>Full-Service Planning</li>
+        <li>Vendor coordination</li>
+        <li>Timeline &amp; logistics</li>
+        <li>Design &amp; styling</li>
+        <li>Budget management</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire</a>
+    </div>
+    <div class="card">
+      <span class="card__tag">For DIY couples</span>
+      <h3 class="card__name">The Day Of</h3>
+      <p class="card__price">From <strong>$1,500</strong></p>
+      <ul class="card__list">
+        <li>Day-of Coordination</li>
+        <li>Rehearsal Coordination</li>
+        <li>Run-of-show</li>
+        <li>Vendor handoff</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire</a>
+    </div>
+    <div class="card">
+      <span class="card__tag">Decor only</span>
+      <h3 class="card__name">Just the Pretty Part</h3>
+      <p class="card__price">From <strong>$350</strong></p>
+      <ul class="card__list">
+        <li>Event Design &amp; Styling</li>
+        <li>Decor Packages</li>
+        <li>Balloon Décor</li>
+        <li>On-site installation</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire</a>
+    </div>
+    <div class="card">
+      <span class="card__tag">À la carte</span>
+      <h3 class="card__name">Pick &amp; Choose</h3>
+      <p class="card__price">From <strong>$500</strong></p>
+      <ul class="card__list">
+        <li>Vendor Coordination</li>
+        <li>Timeline &amp; Logistics</li>
+        <li>Budget Management</li>
+        <li>Venue Selection</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire</a>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="head">
+    <p class="head__eyebrow">Gallery</p>
+    <h2 class="head__title">Recent work, <em>real moments.</em></h2>
+    <p class="head__sub">Weddings, milestone parties, and balloon installs from across the tri-state.</p>
+  </div>
+  <div class="gallery__grid">
+    <div class="photo photo--1"><span>Bachelorette · Hoboken</span></div>
+    <div class="photo photo--2"><span>Wedding · Long Island</span></div>
+    <div class="photo photo--3"><span>Baby shower · Queens</span></div>
+    <div class="photo photo--4"><span>Holiday · Manhattan</span></div>
+    <div class="photo photo--5"><span>Birthday · Englewood</span></div>
+    <div class="photo photo--6"><span>Wedding · Hudson Valley</span></div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="head">
+    <p class="head__eyebrow">Reviews</p>
+    <h2 class="head__title">In her clients' words.</h2>
+  </div>
+  <div class="reviews__row">
+    <article class="review">
+      <div class="review__stars">★★★★★</div>
+      <p class="review__quote">She made our wedding day genuinely effortless. Every detail, every vendor, every flower — handled.</p>
+      <div class="review__attr">
+        <div class="avatar">IA</div>
+        <div><strong>Inna A.</strong><span>Wedding · 2024</span></div>
+      </div>
+    </article>
+    <article class="review">
+      <div class="review__stars">★★★★★</div>
+      <p class="review__quote">Sofiya is meticulous in the best way. Our balloon installation was the most photographed part of the night.</p>
+      <div class="review__attr">
+        <div class="avatar">MF</div>
+        <div><strong>Michelle F.</strong><span>Birthday · 2024</span></div>
+      </div>
+    </article>
+    <article class="review">
+      <div class="review__stars">★★★★★</div>
+      <p class="review__quote">She translated a Pinterest mood-board into a real room. Worth every dollar and then some.</p>
+      <div class="review__attr">
+        <div class="avatar">OG</div>
+        <div><strong>Oscar G.</strong><span>Wedding · 2024</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="head">
+    <p class="head__eyebrow">Process</p>
+    <h2 class="head__title">Four steps, <em>start to celebrate.</em></h2>
+  </div>
+  <div class="process__row">
+    <div class="step">
+      <div class="step__num">01</div>
+      <h3 class="step__name">Inquire</h3>
+      <p class="step__desc">Tell us about your event. We'll reply with a custom quote in 1–2 business days.</p>
+    </div>
+    <div class="step">
+      <div class="step__num">02</div>
+      <h3 class="step__name">Design Consult</h3>
+      <p class="step__desc">Lock the vision, sign the contract, secure your date with a retainer.</p>
+    </div>
+    <div class="step">
+      <div class="step__num">03</div>
+      <h3 class="step__name">Setup</h3>
+      <p class="step__desc">We deliver, install, and style on-site. You arrive to a finished room.</p>
+    </div>
+    <div class="step">
+      <div class="step__num">04</div>
+      <h3 class="step__name">Celebrate</h3>
+      <p class="step__desc">Be present. We handle the rest, from timeline to teardown.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot__grid">
+    <div>
+      <div class="foot__brand">
+        <span class="nav__monogram">SV</span>
+        <span>Silk &amp; Velvet</span>
+      </div>
+      <p style="font-family: var(--serif); font-style: italic; font-size: 1rem; max-width: 32ch; margin-top: 1.25rem; color: color-mix(in oklch, var(--cream) 75%, transparent);">Where creativity meets elegance, making your vision unforgettable.</p>
+    </div>
+    <div class="foot__col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#process">Process</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>Reach</h4>
+      <ul>
+        <li><a href="sms:+16468208418">Text · 646.820.8418</a></li>
+        <li><a href="https://instagram.com/silkandvelvet_events">Instagram</a></li>
+        <li><a href="https://facebook.com/SilkandVelvetEvents">Facebook</a></li>
+        <li><a href="mailto:silk.and.velvet.events1@gmail.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>Service Area</h4>
+      <ul>
+        <li>New York City</li>
+        <li>Long Island</li>
+        <li>New Jersey</li>
+        <li>Travel by request</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__bottom">
+    <span>© 2026 Silk &amp; Velvet Events</span>
+    <span>Made in NYC</span>
+  </div>
+</footer>
+
+<div class="widget" data-widget>
+  <div class="widget__panel" role="dialog" aria-label="Contact options">
+    <div class="widget__handle"></div>
+    <h3 class="widget__title">How would you like to <em>chat?</em></h3>
+    <p class="widget__sub">Sofiya replies fastest by text. Pick whatever works for you.</p>
+    <div class="channels">
+      <a class="channel" href="sms:+16468208418?body=Hi%20Sofiya%2C%20I%27d%20love%20to%20chat%20about%20an%20event%20...">
+        <span class="channel__icon">💬</span>Text
+      </a>
+      <a class="channel" href="https://wa.me/16468208418?text=Hi%20Sofiya%2C%20I%27d%20love%20to%20chat%20about%20an%20event%20...">
+        <span class="channel__icon">📱</span>WhatsApp
+      </a>
+      <a class="channel" href="https://instagram.com/silkandvelvet_events">
+        <span class="channel__icon">📷</span>Instagram
+      </a>
+      <a class="channel" href="https://m.me/SilkandVelvetEvents">
+        <span class="channel__icon">💭</span>Messenger
+      </a>
+      <a class="channel" href="mailto:silk.and.velvet.events1@gmail.com?subject=Event%20inquiry">
+        <span class="channel__icon">✉</span>Email
+      </a>
+      <a class="channel channel--full" href="#contact" data-close-widget>Open the inquiry form →</a>
+    </div>
+  </div>
+</div>
+
+<div class="tag">Variant B · Modern Soft</div>
+
+<script>
+  const widget = document.querySelector('[data-widget]');
+  document.querySelectorAll('[data-open-widget]').forEach(el =>
+    el.addEventListener('click', e => { e.preventDefault(); widget.dataset.open = 'true'; })
+  );
+  document.querySelectorAll('[data-close-widget]').forEach(el =>
+    el.addEventListener('click', () => widget.removeAttribute('data-open'))
+  );
+  widget.addEventListener('click', e => { if (e.target === widget) widget.removeAttribute('data-open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') widget.removeAttribute('data-open'); });
+</script>
+
+</body>
+</html>

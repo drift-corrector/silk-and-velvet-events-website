@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import FaqAccordion from '~/components/FaqAccordion.astro';
+import FaqSchema from '~/components/seo/FaqSchema.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+
+const title = 'FAQ — Silk & Velvet Events';
+const description = 'Frequently asked questions about booking Silk & Velvet Events for weddings, milestones, and balloon installs across NYC, Long Island, and New Jersey.';
+
+const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
+const schemaItems = await Promise.all(
+  faqEntries.map(async (e) => ({
+    question: e.data.question,
+    answerText: e.body.replace(/\s+/g, ' ').trim(),
+  }))
+);
+---
+
+<BaseLayout title={title} description={description}>
+  <FaqSchema slot="head" items={schemaItems} />
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <section class="faq-page">
+    <SectionHead
+      as="h1"
+      eyebrow="FAQ"
+      title="Frequently <em>asked.</em>"
+      sub="Don't see your question? Text Sofiya at 646.820.8418."
+    />
+
+    <FaqAccordion items={faqEntries} />
+  </section>
+</BaseLayout>
+
+<style>
+  .faq-page { padding: 5rem 4rem; }
+  @media (max-width: 600px) { .faq-page { padding: 3.5rem 1.5rem; } }
+</style>

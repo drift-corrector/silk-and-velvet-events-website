@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Silk & Velvet — Mockup Comparison</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, system-ui, sans-serif;
+    background: #1a1a1a;
+    color: #f0f0f0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 12px 20px;
+    background: #0f0f0f;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  h1 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .tab {
+    padding: 6px 12px;
+    background: #2a2a2a;
+    color: #ccc;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .tab:hover { background: #333; color: #fff; }
+  .tab.is-active { background: #d4a350; color: #1a1a1a; border-color: #d4a350; }
+  .views {
+    flex: 1;
+    display: grid;
+    overflow: hidden;
+  }
+  .views.is-side-by-side {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .views.is-single {
+    grid-template-columns: 1fr;
+  }
+  .frame {
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+  }
+  .frame__label {
+    position: absolute;
+    top: 8px; left: 8px;
+    z-index: 10;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+  }
+  .frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .views.is-single .frame { display: none; }
+  .views.is-single .frame.is-active { display: block; }
+  .info {
+    font-size: 0.78rem;
+    color: #999;
+    margin-left: 4px;
+  }
+  kbd {
+    background: #333;
+    color: #f0f0f0;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.72rem;
+    border: 1px solid #555;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Silk &amp; Velvet — 3 Aesthetic Variants</h1>
+  <span class="info">Press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to focus a variant · <kbd>0</kbd> for side-by-side</span>
+  <div class="tabs">
+    <button class="tab is-active" data-view="side-by-side">Side-by-side</button>
+    <button class="tab" data-view="a">A · Editorial</button>
+    <button class="tab" data-view="b">B · Modern Soft</button>
+    <button class="tab" data-view="c">C · Old-World</button>
+  </div>
+</header>
+
+<div class="views is-side-by-side" data-views>
+  <div class="frame" data-frame="a">
+    <span class="frame__label">A · Editorial</span>
+    <iframe src="variant-a-editorial/index.html" loading="lazy" title="Variant A"></iframe>
+  </div>
+  <div class="frame" data-frame="b">
+    <span class="frame__label">B · Modern Soft</span>
+    <iframe src="variant-b-modern-soft/index.html" loading="lazy" title="Variant B"></iframe>
+  </div>
+  <div class="frame" data-frame="c">
+    <span class="frame__label">C · Old-World</span>
+    <iframe src="variant-c-old-world/index.html" loading="lazy" title="Variant C"></iframe>
+  </div>
+</div>
+
+<script>
+  const views = document.querySelector('[data-views]');
+  const tabs = document.querySelectorAll('.tab');
+  const frames = document.querySelectorAll('[data-frame]');
+
+  function setView(view) {
+    tabs.forEach(t => t.classList.toggle('is-active', t.dataset.view === view));
+    if (view === 'side-by-side') {
+      views.classList.add('is-side-by-side');
+      views.classList.remove('is-single');
+      frames.forEach(f => f.classList.remove('is-active'));
+    } else {
+      views.classList.remove('is-side-by-side');
+      views.classList.add('is-single');
+      frames.forEach(f => f.classList.toggle('is-active', f.dataset.frame === view));
+    }
+  }
+
+  tabs.forEach(t => t.addEventListener('click', () => setView(t.dataset.view)));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === '0') setView('side-by-side');
+    if (e.key === '1') setView('a');
+    if (e.key === '2') setView('b');
+    if (e.key === '3') setView('c');
+  });
+</script>
+
+</body>
+</html>

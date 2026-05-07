@@ -1,0 +1,22 @@
+---
+import JsonLd from './JsonLd.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  items: { question: string; answerText: string }[];
+}
+const { items } = Astro.props;
+
+const data = {
+  '@type': 'FAQPage',
+  mainEntity: items.map((q) => ({
+    '@type': 'Question',
+    name: q.question,
+    acceptedAnswer: { '@type': 'Answer', text: q.answerText },
+  })),
+};
+
+export type FaqEntry = CollectionEntry<'faq'>;
+---
+
+<JsonLd data={data} />

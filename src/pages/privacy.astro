@@ -1,0 +1,51 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+
+const title = 'Privacy Policy — Silk & Velvet Events';
+const description = "How Silk & Velvet Events handles personal information submitted through our contact form, text messages, and email inquiries.";
+const lastUpdated = '2026-05-07';
+---
+
+<BaseLayout title={title} description={description}>
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <article class="privacy">
+    <SectionHead as="h1" eyebrow="Privacy" title="Privacy Policy" />
+
+    <p class="privacy__updated">Last updated: {lastUpdated}</p>
+
+    <h2>What we collect</h2>
+    <p>When you fill out our contact form, we collect your name, email, phone number (optional), event type, event date, and any message you include. When you text or DM us, we keep that conversation in our messaging app.</p>
+
+    <h2>How we use it</h2>
+    <p>To reply to your inquiry, send a quote, and (if you book) coordinate your event. That's it. We don't sell or share your information with third parties for marketing.</p>
+
+    <h2>Service providers</h2>
+    <p>Form submissions are processed by Formspree (formspree.io). Our website is hosted on Vercel. Your data may pass through these services in the course of being delivered to us.</p>
+
+    <h2>Cookies</h2>
+    <p>This site doesn't set tracking cookies. We don't run third-party analytics on visitors.</p>
+
+    <h2>Your rights</h2>
+    <p>You can ask us to delete any information we have about you by emailing <a href="mailto:silk.and.velvet.events1@gmail.com">silk.and.velvet.events1@gmail.com</a>.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy? Text Sofiya at 646.820.8418 or email the address above.</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .privacy { max-width: 720px; margin: 0 auto; padding: 5rem 1.5rem; color: var(--ink); font-size: 1rem; line-height: 1.7; }
+  .privacy__updated { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 2rem; }
+  .privacy h2 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    margin: 2rem 0 0.75rem;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .privacy p { margin: 0 0 1rem; color: var(--ink-soft); }
+  .privacy a { color: var(--burgundy); border-bottom: 1px solid color-mix(in oklch, var(--burgundy) 30%, transparent); }
+</style>

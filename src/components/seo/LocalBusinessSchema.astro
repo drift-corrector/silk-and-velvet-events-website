@@ -1,0 +1,25 @@
+---
+import JsonLd from './JsonLd.astro';
+import { ORG } from '~/lib/seo';
+
+const data = {
+  '@type': ['LocalBusiness', 'EventPlanner'],
+  '@id': `${ORG.url}/#localbusiness`,
+  name: ORG.name,
+  url: ORG.url,
+  image: ORG.logo,
+  telephone: ORG.telephone,
+  email: ORG.email,
+  priceRange: ORG.priceRange,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: ORG.address.addressLocality,
+    addressRegion: ORG.address.addressRegion,
+    addressCountry: ORG.address.addressCountry,
+  },
+  areaServed: ORG.serviceArea.map((name) => ({ '@type': 'Place', name })),
+  sameAs: ORG.sameAs,
+};
+---
+
+<JsonLd data={data} />

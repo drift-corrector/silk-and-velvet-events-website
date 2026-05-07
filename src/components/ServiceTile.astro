@@ -1,0 +1,100 @@
+---
+interface Props {
+  tag: string;
+  name: string;
+  priceFrom: number;
+  bullets: string[];
+  href?: string;
+  ctaLabel?: string;
+}
+const { tag, name, priceFrom, bullets, href = '#', ctaLabel = 'Inquire' } = Astro.props;
+const formatted = priceFrom.toLocaleString('en-US');
+const isAnchor = href === '#' || href.startsWith('#');
+---
+
+<div class="card">
+  <span class="card__tag">{tag}</span>
+  <h3 class="card__name">{name}</h3>
+  <p class="card__price">From <strong>${formatted}</strong></p>
+  <ul class="card__list">
+    {bullets.map((b) => <li>{b}</li>)}
+  </ul>
+  {isAnchor ? (
+    <a class="card__cta" href={href} data-open-widget>{ctaLabel}</a>
+  ) : (
+    <a class="card__cta" href={href}>{ctaLabel}</a>
+  )}
+</div>
+
+<style>
+  .card {
+    background: var(--cream);
+    border-radius: var(--r-lg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+    transition: transform 280ms ease, box-shadow 280ms ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .card__tag {
+    align-self: flex-start;
+    background: var(--pink);
+    color: var(--burgundy);
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .card__name {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    color: var(--ink);
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .card__price {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--burgundy);
+    margin: 0;
+  }
+  .card__price strong { font-style: normal; font-size: 1.3rem; font-weight: 500; }
+  .card__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+  .card__list li { display: flex; align-items: center; gap: 8px; }
+  .card__list li::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex: 0 0 auto;
+  }
+  .card__cta {
+    margin-top: auto;
+    padding: 0.65rem 1rem;
+    background: transparent;
+    border: 1px solid color-mix(in oklch, var(--burgundy) 30%, transparent);
+    border-radius: var(--r-pill);
+    color: var(--burgundy);
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 200ms;
+  }
+  .card__cta:hover { background: var(--burgundy); color: var(--cream); border-color: var(--burgundy); }
+</style>

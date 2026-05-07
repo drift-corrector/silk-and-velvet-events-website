@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import ServiceSchema from '~/components/seo/ServiceSchema.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+import { canonical } from '~/lib/seo';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services
+    .filter((s) => s.data.seoDrillDown)
+    .map((s) => ({
+      params: { slug: s.data.seoDrillDown! },
+      props: { service: s },
+    }));
+}
+
+const { service } = Astro.props;
+const { Content } = await service.render();
+const pageUrl = canonical(Astro.url.pathname);
+const title = service.data.seo?.title ?? `${service.data.title} — Silk & Velvet Events`;
+const description = service.data.seo?.description ?? service.data.description;
+---
+
+<BaseLayout title={title} description={description} canonical={pageUrl}>
+  <ServiceSchema
+    slot="head"
+    name={service.data.title}
+    description={description}
+    priceFrom={service.data.priceFrom}
+    url={pageUrl}
+  />
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <article class="service">
+    <SectionHead
+      as="h1"
+      eyebrow="Services"
+      title={service.data.title}
+      sub={service.data.description}
+    />
+
+    <div class="service__body">
+      <div class="service__intro">
+        <p class="service__price">From <strong>${service.data.priceFrom.toLocaleString('en-US')}</strong></p>
+        <Content />
+      </div>
+
+      <div class="service__inclusions">
+        <h2>What's included</h2>
+        <ul>
+          {service.data.inclusions.map((i) => <li>{i}</li>)}
+        </ul>
+        <a class="service__cta" href="/contact/">Inquire about {service.data.shortName ?? service.data.title} →</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .service { padding: 5rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .service__body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: start; }
+  .service__intro { font-size: 1.05rem; line-height: 1.7; color: var(--ink); }
+  .service__intro :global(p) { margin: 0 0 1rem; }
+  .service__price {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--burgundy);
+    font-size: 1.2rem;
+    margin: 0 0 1.5rem;
+  }
+  .service__price strong { font-style: normal; font-size: 1.6rem; font-weight: 500; }
+  .service__inclusions {
+    background: var(--cream);
+    padding: 2rem;
+    border-radius: var(--r-lg);
+    border: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+  }
+  .service__inclusions h2 {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    margin: 0 0 1rem;
+  }
+  .service__inclusions ul { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+  .service__inclusions li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid color-mix(in oklch, var(--ink) 6%, transparent);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .service__inclusions li:last-child { border-bottom: none; }
+  .service__cta {
+    display: inline-block;
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--r-pill);
+    background: var(--burgundy);
+    color: var(--cream);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: all 200ms;
+  }
+  .service__cta:hover { background: oklch(0.36 0.16 5); transform: translateY(-1px); }
+  @media (max-width: 880px) {
+    .service { padding: 3.5rem 1.5rem; }
+    .service__body { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>

@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Silk & Velvet Events — Variant C · Old-World Romantic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --burgundy: oklch(0.42 0.16 5);
+    --burgundy-deep: oklch(0.30 0.14 5);
+    --gold: oklch(0.74 0.13 80);
+    --gold-deep: oklch(0.60 0.12 75);
+    --pink: oklch(0.89 0.05 5);
+    --blush: oklch(0.83 0.06 35);
+    --tan: oklch(0.77 0.08 60);
+    --paper: oklch(0.955 0.022 70);
+    --paper-deep: oklch(0.92 0.03 65);
+    --ink: oklch(0.24 0.06 5);
+    --ink-soft: oklch(0.40 0.05 5);
+
+    --serif: 'Noto Serif Display', 'EB Garamond', Georgia, serif;
+    --serif-body: 'EB Garamond', 'Noto Serif Display', Georgia, serif;
+    --script: 'Halimun', 'Pinyon Script', cursive;
+    --sans: 'Glacial Indifference', system-ui, -apple-system, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif-body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    /* Paper texture using subtle noise */
+    background-image:
+      radial-gradient(circle at 20% 30%, color-mix(in oklch, var(--blush) 30%, transparent), transparent 40%),
+      radial-gradient(circle at 80% 70%, color-mix(in oklch, var(--pink) 25%, transparent), transparent 45%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
+
+  /* ===== Header ===== */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    background: color-mix(in oklch, var(--paper) 90%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid color-mix(in oklch, var(--gold) 35%, transparent);
+  }
+  .nav__brand {
+    font-family: var(--script);
+    font-size: 1.85rem;
+    color: var(--burgundy);
+    line-height: 1;
+  }
+  .nav__brand small {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--gold-deep);
+    margin-top: 4px;
+    text-align: center;
+  }
+  .nav__links {
+    display: flex;
+    gap: 1.75rem;
+    list-style: none;
+    margin: 0; padding: 0;
+    justify-content: center;
+  }
+  .nav__links a {
+    font-family: var(--serif-body);
+    font-size: 0.95rem;
+    color: var(--ink);
+    font-style: italic;
+    transition: color 200ms;
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 50%; right: 50%; bottom: 0;
+    height: 1px;
+    background: var(--burgundy);
+    transition: left 250ms ease, right 250ms ease;
+  }
+  .nav__links a:hover { color: var(--burgundy); }
+  .nav__links a:hover::after { left: 0; right: 0; }
+  .nav__cta {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--burgundy);
+    border: 1px solid var(--burgundy);
+    padding: 0.65rem 1.4rem;
+    background: var(--paper);
+    transition: all 220ms;
+    border-radius: 0;
+    position: relative;
+  }
+  .nav__cta::before, .nav__cta::after {
+    content: '';
+    position: absolute;
+    width: 8px; height: 8px;
+    border: 1px solid var(--gold);
+    transition: all 220ms;
+  }
+  .nav__cta::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .nav__cta::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+  .nav__cta:hover { background: var(--burgundy); color: var(--paper); }
+  .nav__cta:hover::before, .nav__cta:hover::after { border-color: var(--burgundy); }
+  @media (max-width: 880px) {
+    .nav__links { display: none; }
+    .nav { grid-template-columns: 1fr auto; padding: 0.75rem 1.25rem; }
+  }
+
+  /* ===== Ornamental flourish ===== */
+  .flourish {
+    display: block;
+    margin: 0 auto;
+    color: var(--gold);
+    width: 200px;
+    height: auto;
+  }
+  .flourish--small { width: 90px; }
+
+  /* ===== Hero ===== */
+  .hero {
+    text-align: center;
+    padding: 6rem 2rem 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero__est {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin: 0 0 2rem;
+  }
+  .hero__est::before, .hero__est::after {
+    content: '· · ·';
+    margin: 0 1rem;
+    letter-spacing: 0.1em;
+  }
+  .hero__script {
+    font-family: var(--script);
+    font-size: clamp(4rem, 12vw, 9rem);
+    color: var(--burgundy);
+    line-height: 0.9;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+  .hero__amp {
+    font-family: var(--script);
+    color: var(--gold);
+    font-size: 0.85em;
+    vertical-align: 0.05em;
+    padding: 0 0.05em;
+  }
+  .hero__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+    color: var(--ink);
+    max-width: 28ch;
+    margin: 1.5rem auto 0;
+    line-height: 1.4;
+  }
+  .hero__photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 4rem auto 0;
+  }
+  .photo-frame {
+    aspect-ratio: 4 / 5;
+    background: var(--blush);
+    position: relative;
+    box-shadow:
+      0 1px 3px rgba(150, 23, 80, 0.1),
+      0 8px 24px rgba(150, 23, 80, 0.08);
+    padding: 14px 14px 50px;
+    transform: rotate(-1.2deg);
+    transition: transform 400ms ease;
+  }
+  .photo-frame:nth-child(2) { transform: rotate(1.5deg); }
+  .photo-frame:hover { transform: rotate(0); }
+  .photo-frame::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: calc(100% - 50px);
+    position: absolute;
+    inset: 14px 14px 50px;
+    background: linear-gradient(160deg, var(--pink), var(--blush) 60%, var(--tan));
+  }
+  .photo-frame--alt::before {
+    background: linear-gradient(150deg, var(--burgundy), var(--burgundy-deep));
+  }
+  .photo-frame__caption {
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--script);
+    color: var(--burgundy);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+  @media (max-width: 700px) {
+    .hero { padding: 3rem 1.25rem; }
+    .hero__photos { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Section frame ===== */
+  section { padding: 6rem 2rem; position: relative; }
+  .head {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+  }
+  .head__est {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin: 0 0 1rem;
+  }
+  .head__title {
+    font-family: var(--script);
+    font-size: clamp(2.8rem, 6.5vw, 5rem);
+    color: var(--burgundy);
+    line-height: 0.95;
+    margin: 0 0 1rem;
+    font-weight: 400;
+  }
+  .head__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    margin: 1rem auto 0;
+    max-width: 50ch;
+  }
+
+  /* ===== Services with corner brackets ===== */
+  .services { background: color-mix(in oklch, var(--paper-deep) 70%, var(--paper)); }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card {
+    background: var(--paper);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(150, 23, 80, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(150, 23, 80, 0.1);
+  }
+  .card__corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    color: var(--gold);
+  }
+  .card__corner--tl { top: 12px; left: 12px; border-top: 1px solid; border-left: 1px solid; }
+  .card__corner--tr { top: 12px; right: 12px; border-top: 1px solid; border-right: 1px solid; }
+  .card__corner--bl { bottom: 12px; left: 12px; border-bottom: 1px solid; border-left: 1px solid; }
+  .card__corner--br { bottom: 12px; right: 12px; border-bottom: 1px solid; border-right: 1px solid; }
+  .card__roman {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--gold-deep);
+    letter-spacing: 0.1em;
+  }
+  .card__name {
+    font-family: var(--script);
+    font-size: 2.4rem;
+    color: var(--burgundy);
+    margin: 0;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .card__price {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin: 0;
+  }
+  .card__price strong { font-style: normal; font-size: 1.6rem; color: var(--burgundy); font-weight: 500; }
+  .card__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    font-family: var(--serif-body);
+    font-size: 1rem;
+    line-height: 2;
+    color: var(--ink-soft);
+  }
+  .card__list li::before {
+    content: '·';
+    color: var(--gold);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+  .card__cta {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--burgundy);
+    margin-top: 0.5rem;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 4px;
+    transition: color 200ms, border-color 200ms;
+  }
+  .card__cta:hover { color: var(--gold-deep); border-color: var(--burgundy); }
+  @media (max-width: 700px) {
+    .tiles { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Gallery polaroids ===== */
+  .gallery__strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .polaroid {
+    background: var(--paper);
+    padding: 14px 14px 56px;
+    position: relative;
+    box-shadow:
+      0 2px 4px rgba(150, 23, 80, 0.08),
+      0 12px 28px rgba(150, 23, 80, 0.06);
+    transition: transform 400ms ease;
+  }
+  .polaroid:nth-child(odd) { transform: rotate(-1.5deg); }
+  .polaroid:nth-child(even) { transform: rotate(1.5deg); }
+  .polaroid:nth-child(3n) { transform: rotate(0.8deg); }
+  .polaroid:hover { transform: rotate(0) translateY(-4px); }
+  .polaroid__img {
+    aspect-ratio: 1;
+  }
+  .polaroid__cap {
+    position: absolute;
+    bottom: 18px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--script);
+    font-size: 1.25rem;
+    color: var(--burgundy);
+    line-height: 1;
+  }
+  .polaroid--1 .polaroid__img { background: linear-gradient(160deg, var(--pink), var(--blush)); }
+  .polaroid--2 .polaroid__img { background: linear-gradient(150deg, var(--gold), var(--tan)); }
+  .polaroid--3 .polaroid__img { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-deep)); }
+  .polaroid--4 .polaroid__img { background: linear-gradient(170deg, var(--blush), var(--tan)); }
+  .polaroid--5 .polaroid__img { background: linear-gradient(140deg, var(--pink), var(--gold)); }
+
+  /* ===== Pull quote with script marks ===== */
+  .pull {
+    background: var(--burgundy-deep);
+    color: var(--paper);
+    text-align: center;
+    padding: 7rem 2rem;
+    position: relative;
+  }
+  .pull__quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    line-height: 1.4;
+    max-width: 28ch;
+    margin: 2rem auto 1.5rem;
+    color: color-mix(in oklch, var(--paper) 95%, transparent);
+    position: relative;
+  }
+  .pull::before {
+    content: '“';
+    font-family: var(--script);
+    font-size: 9rem;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+    height: 0.5em;
+  }
+  .pull::after {
+    content: '”';
+    font-family: var(--script);
+    font-size: 9rem;
+    color: var(--gold);
+    line-height: 0;
+    display: block;
+    height: 1em;
+    margin-top: 1rem;
+  }
+  .pull__attr {
+    font-family: var(--script);
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-top: 1rem;
+  }
+  .pull__role {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: color-mix(in oklch, var(--gold) 70%, transparent);
+    margin-top: 0.5rem;
+  }
+
+  /* ===== Process scroll ===== */
+  .process { background: var(--paper); }
+  .process__row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 0;
+    position: relative;
+  }
+  .process__row::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: 12.5%; right: 12.5%;
+    height: 1px;
+    background: repeating-linear-gradient(to right, var(--gold) 0 6px, transparent 6px 12px);
+    z-index: 0;
+  }
+  .step {
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .step__num {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    margin: 0 auto 1.5rem;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.85rem;
+    color: var(--burgundy);
+    background: var(--paper);
+  }
+  .step__name {
+    font-family: var(--script);
+    font-size: 2rem;
+    color: var(--burgundy);
+    margin: 0 0 0.5rem;
+    line-height: 1;
+  }
+  .step__desc {
+    font-family: var(--serif);
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 22ch;
+    margin-left: auto; margin-right: auto;
+  }
+  @media (max-width: 880px) {
+    .process__row { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; }
+    .process__row::before { display: none; }
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    background: color-mix(in oklch, var(--paper-deep) 80%, var(--paper));
+    padding: 5rem 2rem 2rem;
+    position: relative;
+  }
+  .foot__brand {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .foot__brand__script {
+    font-family: var(--script);
+    font-size: 3.5rem;
+    color: var(--burgundy);
+    line-height: 1;
+  }
+  .foot__brand__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-top: 0.5rem;
+  }
+  .foot__cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .foot__col h4 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--gold-deep);
+    margin: 0 0 1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .foot__col ul {
+    list-style: none; padding: 0; margin: 0;
+    font-family: var(--serif-body);
+    font-size: 1rem;
+    line-height: 2.1;
+    color: var(--ink);
+  }
+  .foot__col a:hover { color: var(--burgundy); }
+  .foot__bottom {
+    border-top: 1px solid color-mix(in oklch, var(--gold) 30%, transparent);
+    padding-top: 1.5rem;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) {
+    .foot__cols { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  /* ===== Contact widget ===== */
+  .widget {
+    position: fixed; inset: 0;
+    background: color-mix(in oklch, var(--burgundy-deep) 60%, transparent);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .widget[data-open="true"] { display: flex; animation: fade 280ms ease; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .widget__panel {
+    background: var(--paper);
+    width: 100%; max-width: 460px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+    animation: rise 350ms cubic-bezier(0.22, 1, 0.36, 1);
+    background-image:
+      radial-gradient(circle at 50% 0%, color-mix(in oklch, var(--pink) 40%, transparent), transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    border: 1px solid color-mix(in oklch, var(--gold) 50%, transparent);
+  }
+  @keyframes rise { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .widget__panel::before, .widget__panel::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border: 1px solid var(--gold);
+  }
+  .widget__panel::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  .widget__panel::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+  .widget__est {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.78rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin: 0 0 0.5rem;
+  }
+  .widget__title {
+    font-family: var(--script);
+    font-size: 2.6rem;
+    color: var(--burgundy);
+    margin: 0 0 1.5rem;
+    line-height: 1;
+  }
+  .widget__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .widget__list a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 0.85rem 1rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+    border: 1px solid color-mix(in oklch, var(--gold) 50%, transparent);
+    background: var(--paper);
+    transition: all 220ms;
+  }
+  .widget__list a:hover {
+    background: var(--burgundy);
+    color: var(--paper);
+    border-color: var(--burgundy);
+  }
+  .widget__close {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-top: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+  .widget__close:hover { color: var(--burgundy); }
+
+  /* ===== Variant tag ===== */
+  .tag {
+    position: fixed;
+    bottom: 16px; left: 16px;
+    z-index: 60;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--burgundy);
+    background: var(--paper);
+    padding: 8px 14px;
+    border: 1px solid var(--gold);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="#" class="nav__brand">Silk &amp; Velvet<small>Events &amp; Design</small></a>
+  <nav>
+    <ul class="nav__links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </nav>
+  <button class="nav__cta" data-open-widget>Contact Us</button>
+</header>
+
+<section class="hero">
+  <p class="hero__est">Est. NYC · Since 2018</p>
+  <svg class="flourish" viewBox="0 0 200 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M2 16 Q 50 4, 80 16 T 100 16 T 120 16 Q 150 4, 198 16" stroke="currentColor" stroke-width="1" fill="none"/>
+    <circle cx="100" cy="16" r="3" fill="currentColor"/>
+    <circle cx="80" cy="16" r="1.5" fill="currentColor"/>
+    <circle cx="120" cy="16" r="1.5" fill="currentColor"/>
+  </svg>
+  <h1 class="hero__script">Silk <span class="hero__amp">&amp;</span> Velvet</h1>
+  <p class="hero__sub">Considered, hand-styled events for couples and hosts who want every detail held with care.</p>
+  <svg class="flourish flourish--small" viewBox="0 0 200 32" fill="none" aria-hidden="true" style="margin-top: 2rem;">
+    <path d="M2 16 Q 50 4, 80 16 T 100 16 T 120 16 Q 150 4, 198 16" stroke="currentColor" stroke-width="1" fill="none"/>
+    <circle cx="100" cy="16" r="2.5" fill="currentColor"/>
+  </svg>
+  <div class="hero__photos">
+    <div class="photo-frame">
+      <div class="photo-frame__caption">a Long Island wedding</div>
+    </div>
+    <div class="photo-frame photo-frame--alt">
+      <div class="photo-frame__caption">a Brooklyn balloon stack</div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="head">
+    <p class="head__est">Our Services</p>
+    <h2 class="head__title">Four ways to begin</h2>
+    <p class="head__sub">Every package is fully customizable — choose the closest fit and we'll tailor the rest during your design consultation.</p>
+  </div>
+  <div class="tiles">
+    <article class="card">
+      <span class="card__corner card__corner--tl"></span>
+      <span class="card__corner card__corner--tr"></span>
+      <span class="card__corner card__corner--bl"></span>
+      <span class="card__corner card__corner--br"></span>
+      <span class="card__roman">— I —</span>
+      <h3 class="card__name">The Whole Thing</h3>
+      <p class="card__price">from <strong>$4,000</strong></p>
+      <ul class="card__list">
+        <li>Full-Service Planning</li>
+        <li>Vendor coordination</li>
+        <li>Timeline &amp; logistics</li>
+        <li>Design &amp; styling</li>
+        <li>Budget management</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire about this →</a>
+    </article>
+    <article class="card">
+      <span class="card__corner card__corner--tl"></span>
+      <span class="card__corner card__corner--tr"></span>
+      <span class="card__corner card__corner--bl"></span>
+      <span class="card__corner card__corner--br"></span>
+      <span class="card__roman">— II —</span>
+      <h3 class="card__name">The Day Of</h3>
+      <p class="card__price">from <strong>$1,500</strong></p>
+      <ul class="card__list">
+        <li>Day-of Coordination</li>
+        <li>Rehearsal Coordination</li>
+        <li>Run-of-show oversight</li>
+        <li>Vendor handoff</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire about this →</a>
+    </article>
+    <article class="card">
+      <span class="card__corner card__corner--tl"></span>
+      <span class="card__corner card__corner--tr"></span>
+      <span class="card__corner card__corner--bl"></span>
+      <span class="card__corner card__corner--br"></span>
+      <span class="card__roman">— III —</span>
+      <h3 class="card__name">Just the Pretty Part</h3>
+      <p class="card__price">from <strong>$350</strong></p>
+      <ul class="card__list">
+        <li>Event Design &amp; Styling</li>
+        <li>Decor Packages</li>
+        <li>Balloon Décor</li>
+        <li>On-site installation</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire about this →</a>
+    </article>
+    <article class="card">
+      <span class="card__corner card__corner--tl"></span>
+      <span class="card__corner card__corner--tr"></span>
+      <span class="card__corner card__corner--bl"></span>
+      <span class="card__corner card__corner--br"></span>
+      <span class="card__roman">— IV —</span>
+      <h3 class="card__name">Pick &amp; Choose</h3>
+      <p class="card__price">from <strong>$500</strong></p>
+      <ul class="card__list">
+        <li>Vendor Coordination</li>
+        <li>Timeline &amp; Logistics</li>
+        <li>Budget Management</li>
+        <li>Venue Selection</li>
+      </ul>
+      <a class="card__cta" href="#" data-open-widget>Inquire about this →</a>
+    </article>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="head">
+    <p class="head__est">A keepsake</p>
+    <h2 class="head__title">From the album</h2>
+    <p class="head__sub">A handful of recent projects across NYC, Long Island, and New Jersey.</p>
+  </div>
+  <div class="gallery__strip">
+    <div class="polaroid polaroid--1"><div class="polaroid__img"></div><div class="polaroid__cap">a bachelorette</div></div>
+    <div class="polaroid polaroid--2"><div class="polaroid__img"></div><div class="polaroid__cap">a holiday</div></div>
+    <div class="polaroid polaroid--3"><div class="polaroid__img"></div><div class="polaroid__cap">a wedding</div></div>
+    <div class="polaroid polaroid--4"><div class="polaroid__img"></div><div class="polaroid__cap">a baby shower</div></div>
+    <div class="polaroid polaroid--5"><div class="polaroid__img"></div><div class="polaroid__cap">a milestone</div></div>
+  </div>
+</section>
+
+<section class="pull" id="reviews">
+  <p class="pull__quote">She made our wedding day genuinely effortless. Every detail, every vendor, every flower — held with care.</p>
+  <p class="pull__attr">Inna A.</p>
+  <p class="pull__role">Long Island Wedding · 2024</p>
+</section>
+
+<section class="process" id="process">
+  <div class="head">
+    <p class="head__est">Our Process</p>
+    <h2 class="head__title">Four steps to celebrate</h2>
+  </div>
+  <div class="process__row">
+    <div class="step">
+      <div class="step__num">i</div>
+      <h3 class="step__name">Inquire</h3>
+      <p class="step__desc">Tell us about your event — quote in 1–2 days.</p>
+    </div>
+    <div class="step">
+      <div class="step__num">ii</div>
+      <h3 class="step__name">Consult</h3>
+      <p class="step__desc">Lock the vision, sign, secure your date.</p>
+    </div>
+    <div class="step">
+      <div class="step__num">iii</div>
+      <h3 class="step__name">Setup</h3>
+      <p class="step__desc">We deliver, install, and style on-site.</p>
+    </div>
+    <div class="step">
+      <div class="step__num">iv</div>
+      <h3 class="step__name">Celebrate</h3>
+      <p class="step__desc">Be present. We handle the rest.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot__brand">
+    <div class="foot__brand__script">Silk &amp; Velvet</div>
+    <div class="foot__brand__sub">Events &amp; Design</div>
+  </div>
+  <div class="foot__cols">
+    <div class="foot__col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#process">Process</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>Reach</h4>
+      <ul>
+        <li><a href="sms:+16468208418">Text · 646.820.8418</a></li>
+        <li><a href="https://instagram.com/silkandvelvet_events">Instagram</a></li>
+        <li><a href="https://facebook.com/SilkandVelvetEvents">Facebook</a></li>
+        <li><a href="mailto:silk.and.velvet.events1@gmail.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="foot__col">
+      <h4>Service Area</h4>
+      <ul>
+        <li>New York City</li>
+        <li>Long Island</li>
+        <li>New Jersey</li>
+        <li>Travel by request</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot__bottom">© MMXXVI · Silk &amp; Velvet Events · Made in NYC</div>
+</footer>
+
+<div class="widget" data-widget>
+  <div class="widget__panel" role="dialog" aria-label="Contact options">
+    <p class="widget__est">Be in touch</p>
+    <h3 class="widget__title">Tell us<br>about your day</h3>
+    <div class="widget__list">
+      <a href="sms:+16468208418?body=Hi%20Sofiya%2C%20I%27d%20love%20to%20chat%20about%20an%20event%20...">Text Sofiya</a>
+      <a href="https://wa.me/16468208418?text=Hi%20Sofiya%2C%20I%27d%20love%20to%20chat%20about%20an%20event%20...">WhatsApp</a>
+      <a href="https://instagram.com/silkandvelvet_events">Instagram DM</a>
+      <a href="https://m.me/SilkandVelvetEvents">Messenger</a>
+      <a href="mailto:silk.and.velvet.events1@gmail.com?subject=Event%20inquiry">Email</a>
+      <a href="#contact" data-close-widget>Open the inquiry form</a>
+    </div>
+    <button class="widget__close" data-close-widget>— close —</button>
+  </div>
+</div>
+
+<div class="tag">Variant C · Old-World Romantic</div>
+
+<script>
+  const widget = document.querySelector('[data-widget]');
+  document.querySelectorAll('[data-open-widget]').forEach(el =>
+    el.addEventListener('click', e => { e.preventDefault(); widget.dataset.open = 'true'; })
+  );
+  document.querySelectorAll('[data-close-widget]').forEach(el =>
+    el.addEventListener('click', () => widget.removeAttribute('data-open'))
+  );
+  widget.addEventListener('click', e => { if (e.target === widget) widget.removeAttribute('data-open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') widget.removeAttribute('data-open'); });
+</script>
+
+</body>
+</html>

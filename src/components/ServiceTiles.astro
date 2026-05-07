@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import ServiceTile from './ServiceTile.astro';
+
+const groups = await getCollection('service-groups');
+const services = await getCollection('services');
+
+const sorted = groups.sort((a, b) => a.data.order - b.data.order);
+
+function bulletsFor(slug: string): string[] {
+  const group = groups.find((g) => g.id === slug);
+  if (!group) return [];
+  return group.data.services
+    .map((sSlug) => services.find((s) => s.id === sSlug))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s))
+    .map((s) => s.data.shortName ?? s.data.title);
+}
+---
+
+<div class="tiles">
+  {sorted.map((g) => (
+    <ServiceTile
+      tag={g.data.eyebrowTag}
+      name={g.data.title}
+      priceFrom={g.data.priceFrom}
+      bullets={bulletsFor(g.id)}
+      href="#contact"
+      ctaLabel={g.data.ctaLabel}
+    />
+  ))}
+</div>
+
+<style>
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  @media (max-width: 1280px) { .tiles { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 1100px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .tiles { grid-template-columns: 1fr; } }
+</style>

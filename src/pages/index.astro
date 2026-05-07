@@ -1,0 +1,74 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Hero from '~/components/Hero.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import ServiceTiles from '~/components/ServiceTiles.astro';
+import GalleryGrid from '~/components/GalleryGrid.astro';
+import ReviewsRow from '~/components/ReviewsRow.astro';
+import ProcessStrip from '~/components/ProcessStrip.astro';
+import OrganizationSchema from '~/components/seo/OrganizationSchema.astro';
+import LocalBusinessSchema from '~/components/seo/LocalBusinessSchema.astro';
+
+const title = 'Silk & Velvet Events — Wedding Planning & Balloon Decor in NYC, Long Island, NJ';
+const description = 'Full-service event design and balloon decor for weddings, milestones, and celebrations across New York City, Long Island, and New Jersey since 2018.';
+
+const homePhotos = [
+  { alt: 'Bachelorette in Hoboken', caption: 'Bachelorette · Hoboken', variant: 1 as const },
+  { alt: 'Wedding in Long Island', caption: 'Wedding · Long Island', variant: 2 as const },
+  { alt: 'Baby shower in Queens', caption: 'Baby shower · Queens', variant: 3 as const },
+  { alt: 'Holiday event in Manhattan', caption: 'Holiday · Manhattan', variant: 4 as const },
+  { alt: 'Birthday in Englewood', caption: 'Birthday · Englewood', variant: 5 as const },
+  { alt: 'Wedding in Hudson Valley', caption: 'Wedding · Hudson Valley', variant: 6 as const },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <OrganizationSchema slot="head" />
+  <LocalBusinessSchema slot="head" />
+
+  <Hero />
+
+  <section class="services" id="services">
+    <SectionHead
+      eyebrow="Services"
+      title="Pick a starting point. <em>We'll tailor the rest.</em>"
+      sub="Every package is fully customizable — these are just the easiest places to begin."
+    />
+    <ServiceTiles />
+  </section>
+
+  <section class="gallery" id="gallery">
+    <SectionHead
+      eyebrow="Gallery"
+      title="Recent work, <em>real moments.</em>"
+      sub="Weddings, milestone parties, and balloon installs from across the tri-state."
+    />
+    <GalleryGrid photos={homePhotos} />
+    <p class="more"><a href="/gallery/" class="more__link">See the full gallery →</a></p>
+  </section>
+
+  <section class="reviews" id="reviews">
+    <SectionHead eyebrow="Reviews" title="In her clients' words." />
+    <ReviewsRow limit={3} />
+  </section>
+
+  <section class="process" id="process">
+    <SectionHead eyebrow="Process" title="Four steps, <em>start to celebrate.</em>" />
+    <ProcessStrip />
+  </section>
+</BaseLayout>
+
+<style>
+  section { padding: 5rem 4rem; }
+  .services { background: var(--paper); }
+  .reviews { background: var(--pink-soft); }
+  .more { text-align: center; margin-top: 2.5rem; }
+  .more__link {
+    color: var(--burgundy);
+    font-weight: 500;
+    border-bottom: 1.5px solid color-mix(in oklch, var(--burgundy) 30%, transparent);
+    padding-bottom: 2px;
+  }
+  .more__link:hover { border-bottom-color: var(--burgundy); }
+  @media (max-width: 600px) { section { padding: 3.5rem 1.5rem; } }
+</style>

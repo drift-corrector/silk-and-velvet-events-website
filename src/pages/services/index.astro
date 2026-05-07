@@ -1,0 +1,41 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import ServiceTiles from '~/components/ServiceTiles.astro';
+import ServicesTable from '~/components/ServicesTable.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+
+const title = 'Services & Pricing — Silk & Velvet Events';
+const description = 'Five service tiles starting at $350 — full planning, day-of, design, balloons, à la carte. NYC, Long Island, and New Jersey.';
+---
+
+<BaseLayout title={title} description={description}>
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <section class="services-hub">
+    <SectionHead
+      as="h1"
+      eyebrow="Services"
+      title="Five places to <em>start.</em>"
+      sub="Pick a tile to see what's bundled, or scroll for the full breakdown of every service."
+    />
+    <ServiceTiles />
+  </section>
+
+  <section class="services-table">
+    <SectionHead
+      eyebrow="Full menu"
+      title="Every service, <em>itemized.</em>"
+      sub="Anything in the menu can be booked individually or stacked into a custom package."
+    />
+    <ServicesTable />
+  </section>
+</BaseLayout>
+
+<style>
+  .services-hub { background: var(--paper); padding: 5rem 4rem; }
+  .services-table { padding: 5rem 4rem; }
+  @media (max-width: 600px) {
+    .services-hub, .services-table { padding: 3.5rem 1.5rem; }
+  }
+</style>

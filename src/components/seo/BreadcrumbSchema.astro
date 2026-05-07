@@ -1,0 +1,22 @@
+---
+import JsonLd from './JsonLd.astro';
+import { breadcrumbsFor, SITE_URL } from '~/lib/seo';
+
+interface Props {
+  pathname: string;
+}
+const { pathname } = Astro.props;
+const crumbs = breadcrumbsFor(pathname);
+
+const data = {
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    item: new URL(c.href, SITE_URL).toString(),
+  })),
+};
+---
+
+{crumbs.length > 1 && <JsonLd data={data} />}

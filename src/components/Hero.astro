@@ -1,0 +1,172 @@
+---
+interface Props {
+  pillLabel?: string;
+  photoCaption?: string;
+}
+const { pillLabel = 'Now booking 2026 weddings', photoCaption = 'Wedding · Long Island · 2025' } = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero__copy">
+    <span class="pill">{pillLabel}</span>
+    <h1 class="hero__headline"><em>Unforgettable</em><br />is a feeling.</h1>
+    <p class="hero__lead">Full-service event design and balloon decor for weddings, milestone celebrations, and the in-between. Serving New York City, Long Island, and New Jersey since 2018.</p>
+    <div class="hero__actions">
+      <button class="btn btn--primary" type="button" data-open-widget>Get a quote</button>
+      <a class="btn btn--ghost" href="/gallery/">See our work</a>
+    </div>
+  </div>
+  <div class="hero__photo" aria-hidden="true"><span>{photoCaption}</span></div>
+  <div class="hero__metrics">
+    <div class="metric"><strong>200+</strong><span>Events styled</span></div>
+    <div class="metric"><strong>4–8 wks</strong><span>Avg. lead time</span></div>
+    <div class="metric"><strong>NY · NJ · LI</strong><span>Service area</span></div>
+    <div class="metric"><strong>1–2 days</strong><span>Quote turnaround</span></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 4rem 4rem 6rem;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .hero__copy { display: flex; flex-direction: column; gap: 1.25rem; }
+  .pill {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--pink);
+    color: var(--burgundy);
+    border-radius: var(--r-pill);
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--burgundy);
+  }
+  .hero__headline {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .hero__headline em {
+    font-family: var(--script);
+    font-style: normal;
+    color: var(--burgundy);
+    font-weight: 400;
+    font-size: 1.15em;
+    letter-spacing: 0;
+  }
+  .hero__lead {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 44ch;
+    margin: 0;
+  }
+  .hero__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--r-pill);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    transition: all 200ms;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn--primary {
+    background: var(--burgundy);
+    color: var(--cream);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn--primary:hover { background: oklch(0.36 0.16 5); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid color-mix(in oklch, var(--ink) 18%, transparent);
+  }
+  .btn--ghost:hover { background: var(--pink-soft); border-color: var(--burgundy); color: var(--burgundy); }
+  .btn::after { content: '→'; transition: margin-left 200ms; }
+  .btn:hover::after { margin-left: 4px; }
+
+  .hero__photo {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--r-xl);
+    background:
+      radial-gradient(circle at 70% 30%, color-mix(in oklch, var(--gold) 50%, transparent), transparent 55%),
+      linear-gradient(160deg, var(--pink), var(--blush) 60%, var(--tan));
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 80%, color-mix(in oklch, var(--burgundy) 20%, transparent), transparent 55%);
+    mix-blend-mode: multiply;
+  }
+  .hero__photo span {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.5rem;
+    color: var(--cream);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    background: color-mix(in oklch, var(--ink) 35%, transparent);
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+    backdrop-filter: blur(8px);
+  }
+
+  .hero__metrics {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid color-mix(in oklch, var(--ink) 10%, transparent);
+  }
+  .metric { display: flex; flex-direction: column; gap: 4px; }
+  .metric strong {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.85rem;
+    color: var(--burgundy);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .metric span {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: 1fr; padding: 2.5rem 1.5rem 4rem; }
+    .hero__metrics { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+import JsonLd from './JsonLd.astro';
+import { ORG } from '~/lib/seo';
+
+const data = {
+  '@type': 'Organization',
+  '@id': `${ORG.url}/#organization`,
+  name: ORG.name,
+  legalName: ORG.legalName,
+  url: ORG.url,
+  logo: ORG.logo,
+  foundingDate: ORG.founded,
+  founder: { '@type': 'Person', name: ORG.founder },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: ORG.telephone,
+    email: ORG.email,
+    contactType: 'customer service',
+    areaServed: ORG.serviceArea,
+    availableLanguage: ['en'],
+  },
+  sameAs: ORG.sameAs,
+};
+---
+
+<JsonLd data={data} />

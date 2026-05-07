@@ -1,0 +1,28 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import ReviewsRow from '~/components/ReviewsRow.astro';
+import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
+
+const title = 'Reviews — Silk & Velvet Events';
+const description = "Real client reviews of Silk & Velvet Events — weddings, milestones, and balloon installs across NYC, Long Island, and New Jersey.";
+---
+
+<BaseLayout title={title} description={description}>
+  <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
+
+  <section class="reviews">
+    <SectionHead
+      as="h1"
+      eyebrow="Reviews"
+      title="In her clients' <em>words.</em>"
+      sub="Pulled from Facebook, Google, and direct messages. Names used with permission."
+    />
+    <ReviewsRow />
+  </section>
+</BaseLayout>
+
+<style>
+  .reviews { background: var(--pink-soft); padding: 5rem 4rem; }
+  @media (max-width: 600px) { .reviews { padding: 3.5rem 1.5rem; } }
+</style>

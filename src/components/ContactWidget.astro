@@ -1,0 +1,119 @@
+---
+import { CONTACT_CHANNELS } from '~/lib/contact';
+---
+
+<div class="widget" data-widget aria-hidden="true">
+  <div class="widget__panel" role="dialog" aria-modal="true" aria-label="Contact options">
+    <div class="widget__handle" aria-hidden="true"></div>
+    <h3 class="widget__title">How would you like to <em>chat?</em></h3>
+    <p class="widget__sub">Sofiya replies fastest by text. Pick whatever works for you.</p>
+    <div class="channels">
+      {CONTACT_CHANNELS.map((c) => (
+        <a class="channel" href={c.href}>
+          <span class="channel__icon" aria-hidden="true">{c.icon}</span>{c.label}
+        </a>
+      ))}
+      <a class="channel channel--full" href="/contact/" data-close-widget>Open the inquiry form →</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .widget {
+    position: fixed; inset: 0;
+    background: color-mix(in oklch, var(--ink) 50%, transparent);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+  }
+  @media (min-width: 700px) { .widget { align-items: center; } }
+  .widget[data-open="true"] {
+    display: flex;
+    animation: fade 280ms ease;
+  }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  .widget__panel {
+    background: var(--cream);
+    width: 100%;
+    max-width: 440px;
+    padding: 2rem;
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    animation: slide 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (min-width: 700px) { .widget__panel { border-radius: var(--r-xl); } }
+  @keyframes slide { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .widget__handle {
+    width: 40px; height: 4px;
+    background: color-mix(in oklch, var(--ink) 15%, transparent);
+    border-radius: 2px;
+    margin: 0 auto 1.25rem;
+  }
+  @media (min-width: 700px) { .widget__handle { display: none; } }
+  .widget__title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0 0 0.25rem;
+  }
+  .widget__title em { color: var(--burgundy); }
+  .widget__sub {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0 0 1.5rem;
+  }
+  .channels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.85rem 1rem;
+    border-radius: var(--r-md);
+    background: var(--pink-soft);
+    color: var(--ink);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: all 180ms;
+    border: 1px solid transparent;
+  }
+  .channel:hover {
+    background: var(--cream);
+    border-color: var(--burgundy);
+    color: var(--burgundy);
+    transform: translateY(-1px);
+  }
+  .channel__icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: grid; place-items: center;
+    font-size: 1rem;
+    flex: 0 0 auto;
+  }
+  .channel:hover .channel__icon { background: var(--pink); }
+  .channel--full { grid-column: 1 / -1; background: var(--burgundy); color: var(--cream); justify-content: center; }
+  .channel--full:hover { background: oklch(0.36 0.16 5); color: var(--cream); border-color: transparent; }
+</style>
+
+<script>
+  const widget = document.querySelector<HTMLElement>('[data-widget]');
+  if (widget) {
+    const open = () => { widget.dataset.open = 'true'; widget.setAttribute('aria-hidden', 'false'); };
+    const close = () => { widget.removeAttribute('data-open'); widget.setAttribute('aria-hidden', 'true'); };
+    document.querySelectorAll<HTMLElement>('[data-open-widget]').forEach((el) =>
+      el.addEventListener('click', (e) => { e.preventDefault(); open(); })
+    );
+    document.querySelectorAll<HTMLElement>('[data-close-widget]').forEach((el) =>
+      el.addEventListener('click', () => close())
+    );
+    widget.addEventListener('click', (e) => { if (e.target === widget) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  }
+</script>

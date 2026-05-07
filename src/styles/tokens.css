@@ -1,0 +1,26 @@
+:root {
+  --burgundy: oklch(0.42 0.16 5);
+  --burgundy-soft: oklch(0.52 0.13 5);
+  --gold: oklch(0.74 0.13 80);
+  --pink: oklch(0.89 0.05 5);
+  --pink-soft: oklch(0.95 0.022 5);
+  --blush: oklch(0.83 0.06 35);
+  --tan: oklch(0.77 0.08 60);
+  --cream: oklch(0.985 0.01 70);
+  --paper: oklch(0.97 0.018 30);
+  --ink: oklch(0.28 0.045 5);
+  --ink-soft: oklch(0.45 0.03 5);
+
+  --serif: 'Noto Serif Display', 'Cormorant', Georgia, serif;
+  --script: 'Halimun', 'Pinyon Script', cursive;
+  --sans: 'Glacial Indifference', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(150, 23, 80, 0.06), 0 2px 8px rgba(150, 23, 80, 0.04);
+  --shadow-md: 0 4px 12px rgba(150, 23, 80, 0.08), 0 12px 32px rgba(150, 23, 80, 0.05);
+}
