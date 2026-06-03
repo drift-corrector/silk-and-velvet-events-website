@@ -1,0 +1,16 @@
+{
+  "forms": {
+    "quote-inquiry": {
+      "name": "Silk & Velvet — Quote Inquiry",
+      "actions": [
+        { "type": "email", "to": "hello@silkandvelvetevents.com" }
+      ]
+    },
+    "contact-inquiry": {
+      "name": "Silk & Velvet — Contact",
+      "actions": [
+        { "type": "email", "to": "hello@silkandvelvetevents.com" }
+      ]
+    }
+  }
+}
