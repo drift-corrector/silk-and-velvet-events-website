@@ -7,8 +7,10 @@ import { CONTACT_CHANNELS, PHONE_DISPLAY, EMAIL } from '~/lib/contact';
 
 const title = 'Contact — Silk & Velvet Events';
 const description = "Reach Sofiya by text, Instagram, Messenger, or email. We reply within 1–2 business days. Serving NYC, Long Island, and New Jersey.";
-const FORMSPREE_ID = (import.meta.env.PUBLIC_FORMSPREE_ID as string | undefined) ?? '';
-const formAction = FORMSPREE_ID ? `https://formspree.io/f/${FORMSPREE_ID}` : '#';
+const formspreeProjectId = import.meta.env.PUBLIC_FORMSPREE_PROJECT_ID;
+const formAction = formspreeProjectId
+  ? `https://formspree.io/p/${formspreeProjectId}/f/contact-inquiry`
+  : null;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -46,7 +48,7 @@ const formAction = FORMSPREE_ID ? `https://formspree.io/f/${FORMSPREE_ID}` : '#'
         </ul>
       </div>
 
-      <form class="contact__form" action={formAction} method="POST" novalidate>
+      <form class="contact__form" action={formAction || '#'} method="POST" novalidate>
         <h2 class="form__title">Or fill out the inquiry form</h2>
         <div class="form__row">
           <label for="name">Your name</label>
@@ -82,10 +84,10 @@ const formAction = FORMSPREE_ID ? `https://formspree.io/f/${FORMSPREE_ID}` : '#'
           <label for="message">Tell us a little more</label>
           <textarea id="message" name="message" rows="5" placeholder="Guest count, venue (if known), what you'd love help with…"></textarea>
         </div>
-        <button class="form__submit" type="submit" disabled={!FORMSPREE_ID}>
-          {FORMSPREE_ID ? 'Send inquiry →' : 'Form coming soon'}
+        <button class="form__submit" type="submit" disabled={!formAction}>
+          {formAction ? 'Send inquiry →' : 'Form coming soon'}
         </button>
-        {!FORMSPREE_ID && (
+        {!formAction && (
           <p class="form__note">Form submissions are routed once Sofiya provisions Formspree. Until then, please use a channel above.</p>
         )}
       </form>
