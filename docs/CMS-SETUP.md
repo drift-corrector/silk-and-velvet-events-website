@@ -87,7 +87,7 @@ near that.
 
 1. Get an access key at https://web3forms.com (enter `hello@silkandvelvetevents.com`
    as the destination).
-2. Add `PUBLIC_WEB3FORMS_KEY` to the AgentOS vault entry for
+2. Add `WEB3_FORM_KEY` to the AgentOS vault entry for
    `silk-and-velvet-website`, then re-run `mise-env-pull silk-and-velvet-website`.
 3. Add the same variable in Vercel → Project Settings → Environment Variables,
    for all environments, then redeploy.
