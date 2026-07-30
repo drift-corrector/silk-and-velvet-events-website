@@ -16,8 +16,11 @@ export function getStaticPaths() {
 const { label, description, sub } = Astro.props;
 const { category } = Astro.params;
 
+// Until at least one real image exists for the category, keep the full
+// gradient mosaic rather than showing two lonely tiles in a four-column grid.
+// The moment Sofiya uploads one photo, only real entries are shown.
 const uploaded = photosFor(category!);
-const photos = uploaded.length > 0 ? uploaded : placeholderPhotos(label);
+const photos = uploaded.some((p) => p.src) ? uploaded : placeholderPhotos(label);
 
 const title = `${label} — Silk & Velvet Events`;
 ---
