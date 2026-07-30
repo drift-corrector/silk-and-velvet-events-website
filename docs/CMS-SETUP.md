@@ -33,32 +33,47 @@ makes storing images in the repo sane.
 Sign-in needs a tiny OAuth relay because GitHub doesn't allow client-side OAuth
 yet. It's free on Cloudflare Workers and, once deployed, needs no maintenance.
 
-**1. Deploy the worker.** Open
-[sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) and use its
-*Deploy to Cloudflare Workers* button. Copy the resulting URL — it looks like
-`https://sveltia-cms-auth.<subdomain>.workers.dev`.
+Steps 1–3 are **already done**. They're recorded here for the day something
+breaks or needs rotating.
 
-**2. Register a GitHub OAuth app** at
-https://github.com/settings/applications/new
+**1. Worker.** Deployed with `npx wrangler deploy` from a clone of
+[sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) — no fork, no CI
+connection, nothing on the GitHub account. It lives at:
 
-- Application name: `Silk & Velvet Site Editor`
-- Homepage URL: `https://silkandvelvetevents.com`
-- Authorization callback URL: `<WORKER_URL>/callback`
+    https://sveltia-cms-auth.oscar-genesin.workers.dev
 
-Generate a client secret and keep both values to hand.
+To redeploy or update it, clone the repo again and run `npx wrangler deploy`.
+The environment variables below survive redeploys — they're stored on the
+worker, not in the repo.
 
-**3. Add the worker's environment variables** (Cloudflare dashboard → the
-`sveltia-cms-auth` worker → Settings → Variables):
+**2. GitHub OAuth app** — "Silk & Velvet Site Editor", owned by
+`drift-corrector`:
+https://github.com/settings/applications/3762684
+
+- Client ID: `Ov23liIPwpyAuVLINHhM`
+- Callback URL: `https://sveltia-cms-auth.oscar-genesin.workers.dev/callback`
+
+If the client secret ever leaks, generate a new one on that page and re-run the
+`wrangler secret put` command below. Old secrets stop working immediately.
+
+**3. Worker environment variables.** All three are stored encrypted on the
+worker. Set or rotate any of them with:
+
+```bash
+printf '<value>' | npx wrangler secret put <NAME>
+```
 
 | Name | Value |
 |---|---|
-| `GITHUB_CLIENT_ID` | from step 2 |
-| `GITHUB_CLIENT_SECRET` | from step 2 — click **Encrypt** |
-| `ALLOWED_DOMAINS` | `silkandvelvetevents.com, *.silkandvelvetevents.com` |
+| `GITHUB_CLIENT_ID` | `Ov23liIPwpyAuVLINHhM` |
+| `GITHUB_CLIENT_SECRET` | the secret from the OAuth app page |
+| `ALLOWED_DOMAINS` | `silkandvelvetevents.com, *.silkandvelvetevents.com, localhost:4321` |
 
-**4. Point the CMS at it.** In `public/admin/config.yml`, replace the
-`base_url: https://REPLACE-ME.workers.dev` placeholder with the worker URL, then
-commit and push.
+`ALLOWED_DOMAINS` is what stops someone else's site pointing at this worker to
+borrow the OAuth app. `localhost:4321` is in there so `npm run dev` can sign in
+too — drop it if you'd rather lock it down to production only.
+
+**4. Point the CMS at it.** Done — `base_url` in `public/admin/config.yml`.
 
 **5. Invite Sofiya.** Repo → Settings → Collaborators → add her GitHub username
 with **Write** access. She accepts the emailed invite once, and that's the last

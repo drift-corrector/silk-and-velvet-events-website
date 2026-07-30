@@ -2,9 +2,8 @@ backend:
   name: github
   repo: drift-corrector/silk-and-velvet-events-website
   branch: main
-  # TODO(oscar): paste the Cloudflare Worker URL from docs/CMS-SETUP.md step 1.
-  # Until this is set, sign-in only works in local mode (npm run dev, Chrome).
-  base_url: https://REPLACE-ME.workers.dev
+  # OAuth relay — Cloudflare Worker, free tier. See docs/CMS-SETUP.md.
+  base_url: https://sveltia-cms-auth.oscar-genesin.workers.dev
 
 site_url: https://silkandvelvetevents.com
 logo_url: /brand/logo.png
