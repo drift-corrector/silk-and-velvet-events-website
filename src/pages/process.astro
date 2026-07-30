@@ -4,8 +4,10 @@ import SectionHead from '~/components/SectionHead.astro';
 import ProcessStrip from '~/components/ProcessStrip.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
-const title = 'Process — Silk & Velvet Events';
-const description = 'How working with Silk & Velvet works, from inquiry through teardown — four steps, predictable timelines, no surprises.';
+import page from '~/data/pages/process.json';
+
+const title = page.seoTitle;
+const description = page.seoDescription;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -14,9 +16,9 @@ const description = 'How working with Silk & Velvet works, from inquiry through 
   <section class="process">
     <SectionHead
       as="h1"
-      eyebrow="Process"
-      title="Four steps, <em>start to celebrate.</em>"
-      sub="The same flow whether you're booking full planning or a single balloon install. Just scaled to your event."
+      eyebrow={page.eyebrow}
+      title={page.title}
+      sub={page.sub}
     />
     <ProcessStrip />
 

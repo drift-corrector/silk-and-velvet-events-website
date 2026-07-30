@@ -1,10 +1,6 @@
 ---
 import { PHONE_DISPLAY, PHONE } from '~/lib/contact';
-
-const formspreeProjectId = import.meta.env.PUBLIC_FORMSPREE_PROJECT_ID;
-const formAction = formspreeProjectId
-  ? `https://formspree.io/p/${formspreeProjectId}/f/quote-inquiry`
-  : null;
+import { FORM_ACTION, FORM_KEY, thanksUrl } from '~/lib/forms';
 
 const eventTypes = [
   { value: 'wedding', label: 'Wedding' },
@@ -77,11 +73,16 @@ const expectations = [
 
     <form
       class="form"
-      action={formAction || '#'}
+      action={FORM_ACTION}
       method="POST"
-      novalidate
       data-quote-form
     >
+      <input type="hidden" name="access_key" value={FORM_KEY} />
+      <input type="hidden" name="subject" value="New quote request — silkandvelvetevents.com" />
+      <input type="hidden" name="from_name" value="Silk & Velvet website" />
+      <input type="hidden" name="redirect" value={thanksUrl()} />
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true" />
+
       <div class="form__row">
         <label for="qf-name">Name <span class="req" aria-hidden="true">*</span></label>
         <input
@@ -163,12 +164,12 @@ const expectations = [
         ></textarea>
       </div>
 
-      <button class="form__submit" type="submit" disabled={!formAction}>
-        {formAction ? 'Send inquiry' : 'Form coming soon'}
+      <button class="form__submit" type="submit" disabled={!FORM_KEY}>
+        {FORM_KEY ? 'Send inquiry' : 'Form coming soon'}
         <span class="form__arrow" aria-hidden="true">→</span>
       </button>
-      {!formAction && (
-        <p class="form__note">Formspree not yet provisioned — use the channels on the left in the meantime.</p>
+      {!FORM_KEY && (
+        <p class="form__note">The form is being set up — use the channels on the left in the meantime.</p>
       )}
     </form>
   </div>

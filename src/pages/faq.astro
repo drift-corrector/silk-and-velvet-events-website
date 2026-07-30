@@ -6,8 +6,13 @@ import FaqAccordion from '~/components/FaqAccordion.astro';
 import FaqSchema from '~/components/seo/FaqSchema.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
-const title = 'FAQ — Silk & Velvet Events';
-const description = 'Frequently asked questions about booking Silk & Velvet Events for weddings, milestones, and balloon installs across NYC, Long Island, and New Jersey.';
+import page from '~/data/pages/faq.json';
+import { PHONE_DISPLAY } from '~/lib/contact';
+
+const title = page.seoTitle;
+const description = page.seoDescription;
+// {phone} in the CMS text is swapped for the live number from site.json.
+const sub = page.sub.replace('{phone}', PHONE_DISPLAY);
 
 const faqEntries = (await getCollection('faq')).sort((a, b) => a.data.order - b.data.order);
 const schemaItems = await Promise.all(
@@ -25,9 +30,9 @@ const schemaItems = await Promise.all(
   <section class="faq-page">
     <SectionHead
       as="h1"
-      eyebrow="FAQ"
-      title="Frequently <em>asked.</em>"
-      sub="Don't see your question? Text Sofiya at 646.820.8418."
+      eyebrow={page.eyebrow}
+      title={page.title}
+      sub={sub}
     />
 
     <FaqAccordion items={faqEntries} />

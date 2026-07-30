@@ -1,0 +1,347 @@
+backend:
+  name: github
+  repo: drift-corrector/silk-and-velvet-events-website
+  branch: main
+  # OAuth relay — Cloudflare Worker, free tier. See docs/CMS-SETUP.md.
+  base_url: https://sveltia-cms-auth.oscar-genesin.workers.dev
+
+site_url: https://silkandvelvetevents.com
+logo_url: /brand/logo.png
+display_url: https://silkandvelvetevents.com
+
+# Uploads land in public/uploads and are referenced as /uploads/<file>.
+# Sveltia converts to WebP and caps at 2048px in the browser BEFORE committing,
+# so a 9MB phone photo lands in git as a ~200KB file.
+media_folder: /public/uploads
+public_folder: /uploads
+
+media_libraries:
+  all:
+    max_file_size: 26214400
+    slugify_filename: true
+    transformations:
+      raster_image:
+        format: webp
+        quality: 85
+        width: 2048
+        height: 2048
+      svg:
+        optimize: true
+
+collections:
+  # ---------------------------------------------------------------- gallery
+  - name: gallery
+    label: Photos & Gallery
+    icon: photo_library
+    files:
+      - name: gallery
+        label: Gallery
+        file: src/data/gallery.json
+        description: Your photos, the three gallery categories, and the gallery page heading.
+        fields:
+          - name: page
+            label: Gallery page heading
+            widget: object
+            collapsed: true
+            fields:
+              - { name: seoTitle, label: Browser tab / Google title, widget: string }
+              - { name: seoDescription, label: Google description, widget: text }
+              - { name: eyebrow, label: Small label above heading, widget: string }
+              - { name: title, label: Heading, widget: string, hint: "Wrap words in <em>…</em> for the script accent." }
+              - { name: sub, label: Sub-heading, widget: text }
+
+          - name: photos
+            label: Photos
+            label_singular: photo
+            widget: list
+            summary: "{{fields.caption}} — {{fields.category}}"
+            fields:
+              - { name: image, label: Photo, widget: image, required: false }
+              - name: alt
+                label: Describe the photo
+                widget: string
+                hint: For screen readers and Google. e.g. "Blush and gold tablescape at a Long Island wedding".
+              - { name: caption, label: Caption shown on hover, widget: string, required: false }
+              # Reads the Categories list below, so a new category shows up here
+              # automatically instead of being frozen into this config.
+              - name: category
+                label: Category
+                widget: relation
+                collection: gallery
+                file: gallery
+                search_fields: ["categories.*.label"]
+                display_fields: ["categories.*.label"]
+                value_field: "categories.*.slug"
+              - name: featured
+                label: Show on the homepage
+                widget: boolean
+                default: false
+                hint: The homepage shows the first 6 featured photos.
+
+          - name: categories
+            label: Categories
+            label_singular: category
+            widget: list
+            collapsed: true
+            summary: "{{fields.label}}"
+            hint: Changing a slug changes the page's web address. Only do it if you know a link isn't shared anywhere.
+            fields:
+              - { name: slug, label: Web address (no spaces), widget: string, pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers and dashes only'] }
+              - { name: label, label: Category name, widget: string }
+              - { name: cardSub, label: Short line on the category card, widget: string }
+              - { name: sub, label: Longer line on the category page, widget: text }
+              - { name: seoDescription, label: Google description, widget: text }
+              - { name: cover, label: Category cover photo, widget: image, required: false }
+
+  # ------------------------------------------------------------- page text
+  - name: pages
+    label: Page Text
+    icon: article
+    files:
+      - name: home
+        label: Homepage
+        file: src/data/pages/home.json
+        fields:
+          - { name: seoTitle, label: Browser tab / Google title, widget: string }
+          - { name: seoDescription, label: Google description, widget: text }
+          - name: hero
+            label: Top of the page
+            widget: object
+            fields:
+              - { name: pill, label: Little badge, widget: string, required: false, hint: 'e.g. "Now booking 2026 weddings". Leave empty to hide it.' }
+              - { name: headline, label: Big headline, widget: string, hint: "Wrap words in <em>…</em> for the script accent. <br /> starts a new line." }
+              - { name: lead, label: Paragraph under the headline, widget: text }
+              - { name: ctaPrimary, label: Main button text, widget: string }
+              - { name: ctaSecondary, label: Second button text, widget: string }
+              - { name: photo, label: Hero photo, widget: image, required: false }
+              - { name: photoCaption, label: Hero photo caption, widget: string, required: false }
+              - { name: mission, label: Italic line under the hero, widget: text, required: false }
+          - name: servicesSection
+            label: "Section: Services"
+            widget: object
+            collapsed: true
+            fields:
+              - { name: eyebrow, label: Small label, widget: string, required: false }
+              - { name: title, label: Heading, widget: string }
+              - { name: sub, label: Sub-heading, widget: text, required: false }
+          - name: gallerySection
+            label: "Section: Gallery"
+            widget: object
+            collapsed: true
+            fields:
+              - { name: eyebrow, label: Small label, widget: string, required: false }
+              - { name: title, label: Heading, widget: string }
+              - { name: sub, label: Sub-heading, widget: text, required: false }
+              - { name: ctaLabel, label: Link text under the photos, widget: string }
+          - name: reviewsSection
+            label: "Section: Reviews"
+            widget: object
+            collapsed: true
+            fields:
+              - { name: eyebrow, label: Small label, widget: string, required: false }
+              - { name: title, label: Heading, widget: string }
+              - { name: sub, label: Sub-heading, widget: text, required: false }
+          - name: processSection
+            label: "Section: Process"
+            widget: object
+            collapsed: true
+            fields:
+              - { name: eyebrow, label: Small label, widget: string, required: false }
+              - { name: title, label: Heading, widget: string }
+              - { name: sub, label: Sub-heading, widget: text, required: false }
+
+      - name: about
+        label: About page
+        file: src/data/pages/about.json
+        fields: &page_fields
+          - { name: seoTitle, label: Browser tab / Google title, widget: string }
+          - { name: seoDescription, label: Google description, widget: text }
+          - { name: eyebrow, label: Small label above heading, widget: string, required: false }
+          - { name: title, label: Heading, widget: string, hint: "Wrap words in <em>…</em> for the script accent." }
+          - { name: sub, label: Sub-heading, widget: text, required: false }
+
+      - name: services
+        label: Services page
+        file: src/data/pages/services.json
+        fields: *page_fields
+
+      - name: process
+        label: Process page
+        file: src/data/pages/process.json
+        fields: *page_fields
+
+      - name: reviews
+        label: Reviews page
+        file: src/data/pages/reviews.json
+        fields: *page_fields
+
+      - name: faq
+        label: FAQ page
+        file: src/data/pages/faq.json
+        fields:
+          - { name: seoTitle, label: Browser tab / Google title, widget: string }
+          - { name: seoDescription, label: Google description, widget: text }
+          - { name: eyebrow, label: Small label above heading, widget: string, required: false }
+          - { name: title, label: Heading, widget: string, hint: "Wrap words in <em>…</em> for the script accent." }
+          - { name: sub, label: Sub-heading, widget: text, required: false, hint: "Type {phone} anywhere and it becomes the live phone number." }
+
+      - name: contact
+        label: Contact page
+        file: src/data/pages/contact.json
+        fields: *page_fields
+
+  # -------------------------------------------------------- contact details
+  - name: settings
+    label: Contact Details
+    icon: settings
+    files:
+      - name: site
+        label: Contact details
+        file: src/data/site.json
+        description: Used across the whole site — footer, contact page, FAQ, and the info Google reads.
+        fields:
+          - { name: phone, label: Phone number (for tapping), widget: string, hint: "Digits only with country code, e.g. +16468208418" }
+          - { name: phoneDisplay, label: Phone number (as shown), widget: string, hint: "e.g. 646.820.8418" }
+          - { name: email, label: Email address, widget: string }
+          - { name: instagramHandle, label: Instagram handle, widget: string, hint: "Without the @" }
+          - { name: facebookPage, label: Facebook page name, widget: string, hint: "The part after facebook.com/" }
+          - { name: footerTagline, label: Footer tagline, widget: text }
+          - { name: serviceAreas, label: Service areas, widget: list, field: { name: area, label: Area, widget: string } }
+          - { name: smsPrefill, label: Pre-written text message, widget: text, hint: "What gets typed for someone when they tap Text." }
+
+  # -------------------------------------------------- existing md collections
+  - name: services
+    label: Services
+    label_singular: service
+    icon: sell
+    folder: src/content/services
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{title}} — from ${{priceFrom}}"
+    fields:
+      - { name: title, label: Name, widget: string }
+      - { name: shortName, label: Short name, widget: string, required: false }
+      - { name: description, label: Description, widget: text }
+      - { name: priceFrom, label: Starting price ($), widget: number, value_type: int, min: 0 }
+      - name: group
+        label: Package it belongs to
+        widget: select
+        options: ["whole-thing", "day-of", "pretty-part", "balloon", "pick-choose"]
+      - { name: order, label: Sort order, widget: number, value_type: int }
+      - { name: inclusions, label: What's included, widget: list, field: { name: item, label: Item, widget: string } }
+      - { name: seoDrillDown, label: SEO landing slug, widget: string, required: false }
+      - name: seo
+        label: Search engine overrides
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - { name: title, label: Google title, widget: string, required: false }
+          - { name: description, label: Google description, widget: text, required: false }
+      - { name: body, label: Longer description, widget: markdown, required: false }
+
+  - name: service-groups
+    label: Service Packages
+    label_singular: package
+    icon: category
+    folder: src/content/service-groups
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{title}}"
+    fields:
+      - { name: title, label: Package name, widget: string }
+      - { name: eyebrowTag, label: Small tag above the name, widget: string }
+      - { name: priceFrom, label: Starting price ($), widget: number, value_type: int, min: 0 }
+      - { name: order, label: Sort order, widget: number, value_type: int }
+      - name: services
+        label: Services in this package
+        widget: relation
+        collection: services
+        search_fields: [title]
+        value_field: "{{slug}}"
+        display_fields: [title]
+        multiple: true
+      - { name: description, label: Description, widget: text }
+      - { name: ctaLabel, label: Button text, widget: string, default: Inquire }
+      - { name: photo, label: Photo, widget: image, required: false }
+      - { name: photoCaption, label: Photo caption, widget: string, required: false }
+      - { name: body, label: Longer description, widget: markdown, required: false }
+
+  - name: faq
+    label: Questions & Answers
+    label_singular: question
+    icon: help
+    folder: src/content/faq
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{question}}"
+    fields:
+      - { name: question, label: Question, widget: string }
+      - name: category
+        label: Category
+        widget: select
+        options: ["booking", "pricing", "planning", "logistics", "general"]
+        default: general
+      - { name: order, label: Sort order, widget: number, value_type: int, default: 0 }
+      - { name: body, label: Answer, widget: markdown }
+
+  - name: reviews
+    label: Reviews
+    label_singular: review
+    icon: star
+    folder: src/content/reviews
+    create: true
+    slug: "{{authorName}}-{{year}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{authorName}} — {{eventType}} {{year}}"
+    fields:
+      - { name: quote, label: What they said, widget: text }
+      - { name: authorName, label: Their name, widget: string, hint: "e.g. Michelle F." }
+      - { name: eventType, label: Event type, widget: string, hint: "e.g. Wedding, Birthday" }
+      - { name: year, label: Year, widget: number, value_type: int, min: 2018 }
+      - name: source
+        label: Where it came from
+        widget: select
+        options: ["facebook", "google", "direct"]
+        default: direct
+      - { name: rating, label: Stars, widget: number, value_type: int, min: 1, max: 5, default: 5 }
+
+  - name: process
+    label: How It Works
+    label_singular: step
+    icon: list
+    folder: src/content/process
+    create: false
+    delete: false
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{step}}. {{name}}"
+    fields:
+      - { name: step, label: Step number, widget: number, value_type: int, min: 1, max: 4 }
+      - { name: name, label: Step name, widget: string }
+      - { name: description, label: Description, widget: text }
+
+  - name: team
+    label: Team
+    label_singular: team member
+    icon: group
+    folder: src/content/team
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    summary: "{{name}} — {{role}}"
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: role, label: Role, widget: string }
+      - { name: order, label: Sort order, widget: number, value_type: int, default: 0 }
+      - { name: photo, label: Photo, widget: image, required: false }
+      - { name: photoCaption, label: Photo caption, widget: string, required: false }
+      - { name: body, label: Bio, widget: markdown, required: false }

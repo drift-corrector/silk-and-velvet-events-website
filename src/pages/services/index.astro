@@ -5,8 +5,10 @@ import SectionHead from '~/components/SectionHead.astro';
 import ServiceGroupSection from '~/components/ServiceGroupSection.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
-const title = 'Services — Silk & Velvet Events';
-const description = 'Full-service planning, day-of coordination, event design, balloon décor, and à la carte support across New York City, Long Island, and New Jersey.';
+import page from '~/data/pages/services.json';
+
+const title = page.seoTitle;
+const description = page.seoDescription;
 
 const groups = (await getCollection('service-groups')).sort((a, b) => a.data.order - b.data.order);
 const services = await getCollection('services');
@@ -18,9 +20,9 @@ const services = await getCollection('services');
   <section class="services-intro">
     <SectionHead
       as="h1"
-      eyebrow="Services"
-      title="Five places to <em>start.</em>"
-      sub="Five ways we plug in — pick the one that matches where you are."
+      eyebrow={page.eyebrow}
+      title={page.title}
+      sub={page.sub}
     />
   </section>
 
