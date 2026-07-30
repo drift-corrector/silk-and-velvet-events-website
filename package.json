@@ -11,7 +11,9 @@
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
-    "check:cms": "node scripts/check-cms-config.mjs"
+    "check:cms": "node scripts/check-cms-config.mjs",
+    "check:schemas": "node scripts/check-schema-resilience.mjs",
+    "check:all": "npm run check:cms && npm run check:schemas && npm run check"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

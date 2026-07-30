@@ -102,6 +102,29 @@ set up" note, rather than silently dropping inquiries.
 `PUBLIC_FORMSPREE_PROJECT_ID` and `FORMSPREE_DEPLOY_KEY` are now dead vault
 entries and can be deleted.
 
+## Why a bad save can't break the deploy
+
+The markdown collections used to carry strict Zod schemas — `inclusions` needed
+at least one item, `year` had to be 2018 or later, and so on. A save that
+violated one failed the production build with `InvalidContentEntryDataError`.
+Vercel would keep serving the last good deploy, so the site stayed up, but
+Sofiya's change silently never appeared and nothing told her why.
+
+Every field in `src/content/schemas.mjs` now uses `.catch(fallback)`, which
+covers both missing and wrong-typed values. A bad save renders a thin or empty
+section instead — visible, obviously wrong, and fixable by her without help.
+
+```bash
+npm run check:schemas
+```
+
+feeds every schema the shapes a bad save actually produces (empty object, nulls,
+wrong types, out-of-range numbers, unknown enum values) and fails if any of them
+would throw. Run it after touching `schemas.mjs`.
+
+`npm run check:all` runs that, the config-coverage guard, and `astro check`
+together.
+
 ## The one rule when editing config.yml
 
 **Sveltia rewrites a whole file from the fields declared in `config.yml`. Any
