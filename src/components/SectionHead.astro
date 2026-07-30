@@ -1,11 +1,11 @@
 ---
-type Props = {
+interface Props {
   eyebrow?: string;
   title: string;
   sub?: string;
   as?: 'h1' | 'h2';
-};
-const { eyebrow, title, sub, as: Tag = 'h2' } = Astro.props as Props;
+}
+const { eyebrow, title, sub, as: Tag = 'h2' } = Astro.props;
 ---
 
 <div class="head">

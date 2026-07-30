@@ -1,0 +1,58 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import { SMS_HREF, PHONE_DISPLAY } from '~/lib/contact';
+
+const title = 'Thank you — Silk & Velvet Events';
+const description = 'Your inquiry is in. Sofiya replies within 1–2 business days.';
+---
+
+<BaseLayout title={title} description={description} noindex>
+  <section class="thanks">
+    <SectionHead
+      as="h1"
+      eyebrow="Inquiry received"
+      title="Thank you — <em>we've got it.</em>"
+      sub="Sofiya reads every inquiry herself and comes back with a custom quote, usually within 1–2 business days."
+    />
+
+    <div class="thanks__actions">
+      <a class="btn btn--primary" href="/gallery/">Browse the gallery</a>
+      <a class="btn btn--ghost" href={SMS_HREF}>Or text Sofiya · {PHONE_DISPLAY}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks { padding: 6rem 4rem 7rem; }
+  .thanks__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--r-pill);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    transition: all 200ms;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn--primary {
+    background: var(--burgundy);
+    color: var(--cream);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn--primary:hover { background: oklch(0.36 0.16 5); transform: translateY(-1px); }
+  .btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid color-mix(in oklch, var(--ink) 18%, transparent);
+  }
+  .btn--ghost:hover { background: var(--pink-soft); border-color: var(--burgundy); color: var(--burgundy); }
+  @media (max-width: 600px) { .thanks { padding: 4rem 1.5rem 5rem; } }
+</style>

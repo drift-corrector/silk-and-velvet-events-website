@@ -4,8 +4,10 @@ import SectionHead from '~/components/SectionHead.astro';
 import ReviewsRow from '~/components/ReviewsRow.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
-const title = 'Reviews — Silk & Velvet Events';
-const description = "Real client reviews of Silk & Velvet Events — weddings, milestones, and balloon installs across NYC, Long Island, and New Jersey.";
+import page from '~/data/pages/reviews.json';
+
+const title = page.seoTitle;
+const description = page.seoDescription;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -14,9 +16,9 @@ const description = "Real client reviews of Silk & Velvet Events — weddings, m
   <section class="reviews">
     <SectionHead
       as="h1"
-      eyebrow="Reviews"
-      title="In her clients' <em>words.</em>"
-      sub="Pulled from Facebook, Google, and direct messages. Names used with permission."
+      eyebrow={page.eyebrow}
+      title={page.title}
+      sub={page.sub}
     />
     <ReviewsRow />
   </section>

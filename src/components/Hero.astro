@@ -1,25 +1,31 @@
 ---
-interface Props {
-  pillLabel?: string;
-  photoCaption?: string;
-}
-const { pillLabel = 'Now booking 2026 weddings', photoCaption = 'Wedding · Long Island · 2025' } = Astro.props;
+import home from '~/data/pages/home.json';
+
+const hero = home.hero;
 ---
 
 <section class="hero">
   <div class="hero__copy">
-    <span class="pill">{pillLabel}</span>
-    <h1 class="hero__headline"><em>Unforgettable</em><br />is a feeling.</h1>
-    <p class="hero__lead">Full-service event design and balloon decor for weddings, milestone celebrations, and the in-between. Serving New York City, Long Island, and New Jersey since 2018.</p>
+    {hero.pill && <span class="pill">{hero.pill}</span>}
+    <h1 class="hero__headline" set:html={hero.headline} />
+    <p class="hero__lead">{hero.lead}</p>
     <div class="hero__actions">
-      <button class="btn btn--primary" type="button" data-open-widget>Get a quote</button>
-      <a class="btn btn--ghost" href="/gallery/">See our work</a>
+      <button class="btn btn--primary" type="button" data-open-widget>{hero.ctaPrimary}</button>
+      <a class="btn btn--ghost" href="/gallery/">{hero.ctaSecondary}</a>
     </div>
   </div>
-  <div class="hero__photo" aria-hidden="true"><span>{photoCaption}</span></div>
-  <aside class="hero__mission">
-    <p>Florals, balloons, lighting, paper, and the quiet logistics in between — designed to feel weightless on the day it actually matters.</p>
-  </aside>
+  <div
+    class:list={['hero__photo', { 'hero__photo--empty': !hero.photo }]}
+    aria-hidden={hero.photo ? undefined : 'true'}
+  >
+    {hero.photo && <img src={hero.photo} alt={hero.photoCaption} width="1200" height="1500" />}
+    {hero.photoCaption && <span>{hero.photoCaption}</span>}
+  </div>
+  {hero.mission && (
+    <aside class="hero__mission">
+      <p>{hero.mission}</p>
+    </aside>
+  )}
 </section>
 
 <style>
@@ -119,13 +125,20 @@ const { pillLabel = 'Now booking 2026 weddings', photoCaption = 'Wedding · Long
     position: relative;
     overflow: hidden;
   }
-  .hero__photo::before {
+  /* Tint only applies to the gradient placeholder — never over a real photo. */
+  .hero__photo--empty::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
       radial-gradient(ellipse at 30% 80%, color-mix(in oklch, var(--burgundy) 20%, transparent), transparent 55%);
     mix-blend-mode: multiply;
+  }
+  .hero__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .hero__photo span {
     position: absolute;

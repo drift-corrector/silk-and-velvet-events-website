@@ -3,18 +3,20 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "Silk & Velvet Events — Astro static site (Sofiya v1)",
+  "description": "Silk & Velvet Events \u2014 Astro static site (Sofiya v1)",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "check:cms": "node scripts/check-cms-config.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/sitemap": "^3.4.1",
+    "@sveltia/cms": "^0.176.0",
     "astro": "^5.13.0",
     "sharp": "^0.34.0",
     "typescript": "^5.7.0"

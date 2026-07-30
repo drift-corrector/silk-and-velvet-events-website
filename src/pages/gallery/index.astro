@@ -3,14 +3,13 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import SectionHead from '~/components/SectionHead.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
-const title = 'Gallery — Silk & Velvet Events';
-const description = 'Recent weddings, milestone celebrations, and balloon installs by Silk & Velvet Events across NYC, Long Island, and New Jersey.';
+import { categories, galleryPage } from '~/lib/gallery';
 
-const categories = [
-  { slug: 'wedding-details', label: 'Wedding Details', sub: 'Tablescapes, florals, ceremony moments.', variant: 2 },
-  { slug: 'event-decor', label: 'Event Decor', sub: 'Showers, milestones, holiday parties.', variant: 5 },
-  { slug: 'balloon-decor', label: 'Balloon Decor', sub: 'Arches, organics, ceiling installs.', variant: 4 },
-] as const;
+const title = galleryPage.seoTitle;
+const description = galleryPage.seoDescription;
+
+// Gradient fallbacks, cycled, for categories with no cover photo uploaded yet.
+const VARIANTS = [2, 5, 4] as const;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -19,17 +18,21 @@ const categories = [
   <section class="gallery-hub">
     <SectionHead
       as="h1"
-      eyebrow="Gallery"
-      title="Recent work, <em>by category.</em>"
-      sub="Three streams — weddings, events, balloons. Pick a thread."
+      eyebrow={galleryPage.eyebrow}
+      title={galleryPage.title}
+      sub={galleryPage.sub}
     />
 
     <div class="cats">
-      {categories.map((c) => (
-        <a class={`cat photo--${c.variant}`} href={`/gallery/${c.slug}/`}>
+      {categories.map((c, i) => (
+        <a
+          class:list={['cat', { [`photo--${VARIANTS[i % VARIANTS.length]}`]: !c.cover }]}
+          href={`/gallery/${c.slug}/`}
+        >
+          {c.cover && <img src={c.cover} alt={c.label} width="800" height="1000" />}
           <div class="cat__overlay">
             <h2>{c.label}</h2>
-            <p>{c.sub}</p>
+            <p>{c.cardSub}</p>
           </div>
         </a>
       ))}
@@ -55,6 +58,12 @@ const categories = [
     background: var(--blush);
   }
   .cat:hover { transform: scale(1.01); }
+  .cat img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
   .cat__overlay {
     position: absolute;
     inset: auto 0 0 0;

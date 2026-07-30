@@ -1,3 +1,5 @@
+import site from '~/data/site.json';
+
 const SITE_URL = (import.meta.env.PUBLIC_SITE_URL as string | undefined) ?? 'https://silkandvelvetevents.com';
 
 export function canonical(path: string): string {
@@ -38,19 +40,19 @@ export const ORG = {
   logo: `${SITE_URL}/brand/logo.png`,
   founded: '2018',
   founder: 'Sofiya',
-  telephone: '+1-646-820-8418',
-  email: 'silk.and.velvet.events1@gmail.com',
+  telephone: site.phone,
+  email: site.email,
   priceRange: '$$-$$$$',
   sameAs: [
-    'https://instagram.com/silkandvelvet_events',
-    'https://facebook.com/SilkandVelvetEvents',
+    `https://instagram.com/${site.instagramHandle}`,
+    `https://facebook.com/${site.facebookPage}`,
   ],
   address: {
     addressLocality: 'New York',
     addressRegion: 'NY',
     addressCountry: 'US',
   },
-  serviceArea: ['New York City', 'Long Island', 'New Jersey'] as string[],
+  serviceArea: site.serviceAreas as string[],
 };
 
 export { SITE_URL };

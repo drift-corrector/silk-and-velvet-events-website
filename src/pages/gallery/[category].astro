@@ -4,42 +4,20 @@ import SectionHead from '~/components/SectionHead.astro';
 import GalleryGrid from '~/components/GalleryGrid.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
 
-export async function getStaticPaths() {
-  return [
-    {
-      params: { category: 'wedding-details' },
-      props: {
-        label: 'Wedding Details',
-        description: 'Wedding tablescapes, ceremony designs, and floral installs from Silk & Velvet Events across NYC, Long Island, and New Jersey.',
-        sub: 'Tablescapes, ceremony moments, florals, and the small details guests remember.',
-      },
-    },
-    {
-      params: { category: 'event-decor' },
-      props: {
-        label: 'Event Decor',
-        description: 'Birthday, milestone, and shower decor by Silk & Velvet Events. Real installs from the tri-state.',
-        sub: 'Baby and bridal showers, milestone birthdays, holiday parties, corporate gatherings.',
-      },
-    },
-    {
-      params: { category: 'balloon-decor' },
-      props: {
-        label: 'Balloon Decor',
-        description: 'Sculpted balloon arches, organics, and ceiling installs by Silk & Velvet Events. NYC, Long Island, NJ.',
-        sub: 'Arches, garlands, organics, columns, and full-room ceiling treatments.',
-      },
-    },
-  ];
+import { categories, photosFor, placeholderPhotos, galleryPage } from '~/lib/gallery';
+
+export function getStaticPaths() {
+  return categories.map((c) => ({
+    params: { category: c.slug },
+    props: { label: c.label, description: c.seoDescription, sub: c.sub },
+  }));
 }
 
 const { label, description, sub } = Astro.props;
+const { category } = Astro.params;
 
-const photos = Array.from({ length: 9 }, (_, i) => ({
-  alt: `${label} sample ${i + 1}`,
-  caption: `${label} · ${i + 1}`,
-  variant: ((i % 6) + 1) as 1 | 2 | 3 | 4 | 5 | 6,
-}));
+const uploaded = photosFor(category!);
+const photos = uploaded.length > 0 ? uploaded : placeholderPhotos(label);
 
 const title = `${label} — Silk & Velvet Events`;
 ---
@@ -48,7 +26,7 @@ const title = `${label} — Silk & Velvet Events`;
   <BreadcrumbSchema slot="head" pathname={Astro.url.pathname} />
 
   <section class="gallery-cat">
-    <SectionHead as="h1" eyebrow="Gallery" title={label} sub={sub} />
+    <SectionHead as="h1" eyebrow={galleryPage.eyebrow} title={label} sub={sub} />
     <GalleryGrid photos={photos} />
     <p class="back"><a href="/gallery/">← All categories</a></p>
   </section>

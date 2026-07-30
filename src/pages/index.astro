@@ -10,17 +10,12 @@ import QuoteForm from '~/components/QuoteForm.astro';
 import OrganizationSchema from '~/components/seo/OrganizationSchema.astro';
 import LocalBusinessSchema from '~/components/seo/LocalBusinessSchema.astro';
 
-const title = 'Silk & Velvet Events — Wedding Planning & Balloon Decor in NYC, Long Island, NJ';
-const description = 'Full-service event design and balloon decor for weddings, milestones, and celebrations across New York City, Long Island, and New Jersey since 2018.';
+import home from '~/data/pages/home.json';
+import { featuredPhotos } from '~/lib/gallery';
 
-const homePhotos = [
-  { alt: 'Bachelorette in Hoboken', caption: 'Bachelorette · Hoboken', variant: 1 as const },
-  { alt: 'Wedding in Long Island', caption: 'Wedding · Long Island', variant: 2 as const },
-  { alt: 'Baby shower in Queens', caption: 'Baby shower · Queens', variant: 3 as const },
-  { alt: 'Holiday event in Manhattan', caption: 'Holiday · Manhattan', variant: 4 as const },
-  { alt: 'Birthday in Englewood', caption: 'Birthday · Englewood', variant: 5 as const },
-  { alt: 'Wedding in Hudson Valley', caption: 'Wedding · Hudson Valley', variant: 6 as const },
-];
+const title = home.seoTitle;
+const description = home.seoDescription;
+const homePhotos = featuredPhotos(6);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -30,31 +25,27 @@ const homePhotos = [
   <Hero />
 
   <section class="services" id="services">
-    <SectionHead
-      eyebrow="Services"
-      title="Pick a starting point. <em>We'll tailor the rest.</em>"
-      sub="Every package is fully customizable — these are just the easiest places to begin."
-    />
+    <SectionHead {...home.servicesSection} />
     <ServiceTiles />
   </section>
 
   <section class="gallery" id="gallery">
     <SectionHead
-      eyebrow="Gallery"
-      title="Recent work, <em>real moments.</em>"
-      sub="Weddings, milestone parties, and balloon installs from across the tri-state."
+      eyebrow={home.gallerySection.eyebrow}
+      title={home.gallerySection.title}
+      sub={home.gallerySection.sub}
     />
     <GalleryGrid photos={homePhotos} />
-    <p class="more"><a href="/gallery/" class="more__link">See the full gallery →</a></p>
+    <p class="more"><a href="/gallery/" class="more__link">{home.gallerySection.ctaLabel} →</a></p>
   </section>
 
   <section class="reviews" id="reviews">
-    <SectionHead eyebrow="Reviews" title="In her clients' words." />
+    <SectionHead {...home.reviewsSection} />
     <ReviewsRow limit={3} />
   </section>
 
   <section class="process" id="process">
-    <SectionHead eyebrow="Process" title="Four steps, <em>start to celebrate.</em>" />
+    <SectionHead {...home.processSection} />
     <ProcessStrip />
   </section>
 

@@ -1,0 +1,93 @@
+{
+  "page": {
+    "seoTitle": "Gallery — Silk & Velvet Events",
+    "seoDescription": "Recent weddings, milestone celebrations, and balloon installs by Silk & Velvet Events across NYC, Long Island, and New Jersey.",
+    "eyebrow": "Gallery",
+    "title": "Recent work, <em>by category.</em>",
+    "sub": "Three streams — weddings, events, balloons. Pick a thread."
+  },
+  "categories": [
+    {
+      "slug": "wedding-details",
+      "label": "Wedding Details",
+      "sub": "Tablescapes, ceremony moments, florals, and the small details guests remember.",
+      "cardSub": "Tablescapes, florals, ceremony moments.",
+      "seoDescription": "Wedding tablescapes, ceremony designs, and floral installs from Silk & Velvet Events across NYC, Long Island, and New Jersey.",
+      "cover": ""
+    },
+    {
+      "slug": "event-decor",
+      "label": "Event Decor",
+      "sub": "Baby and bridal showers, milestone birthdays, holiday parties, corporate gatherings.",
+      "cardSub": "Showers, milestones, holiday parties.",
+      "seoDescription": "Birthday, milestone, and shower decor by Silk & Velvet Events. Real installs from the tri-state.",
+      "cover": ""
+    },
+    {
+      "slug": "balloon-decor",
+      "label": "Balloon Decor",
+      "sub": "Arches, garlands, organics, columns, and full-room ceiling treatments.",
+      "cardSub": "Arches, organics, ceiling installs.",
+      "seoDescription": "Sculpted balloon arches, organics, and ceiling installs by Silk & Velvet Events. NYC, Long Island, NJ.",
+      "cover": ""
+    }
+  ],
+  "photos": [
+    {
+      "image": "",
+      "alt": "Bachelorette in Hoboken",
+      "caption": "Bachelorette · Hoboken",
+      "category": "event-decor",
+      "featured": true
+    },
+    {
+      "image": "",
+      "alt": "Wedding in Long Island",
+      "caption": "Wedding · Long Island",
+      "category": "wedding-details",
+      "featured": true
+    },
+    {
+      "image": "",
+      "alt": "Baby shower in Queens",
+      "caption": "Baby shower · Queens",
+      "category": "event-decor",
+      "featured": true
+    },
+    {
+      "image": "",
+      "alt": "Holiday event in Manhattan",
+      "caption": "Holiday · Manhattan",
+      "category": "event-decor",
+      "featured": true
+    },
+    {
+      "image": "",
+      "alt": "Birthday in Englewood",
+      "caption": "Birthday · Englewood",
+      "category": "event-decor",
+      "featured": true
+    },
+    {
+      "image": "",
+      "alt": "Wedding in Hudson Valley",
+      "caption": "Wedding · Hudson Valley",
+      "category": "wedding-details",
+      "featured": true
+    },
+    {
+      "image": "",
+      "alt": "Balloon arch in Brooklyn",
+      "caption": "Balloon arch · Brooklyn",
+      "category": "balloon-decor",
+      "featured": false
+    },
+    {
+      "image": "",
+      "alt": "Ceiling balloon install in Queens",
+      "caption": "Ceiling install · Queens",
+      "category": "balloon-decor",
+      "featured": false
+    }
+  ]
+}

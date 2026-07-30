@@ -1,0 +1,22 @@
+---
+// Sveltia CMS admin. Deliberately bare — no BaseLayout, no site CSS, no header.
+// The editor UI owns the whole page. Config lives in public/admin/config.yml so
+// it ships as a plain static file the CMS can fetch at runtime.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Silk &amp; Velvet — Site Editor</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="/admin/config.yml" type="application/yaml" rel="cms-config-url" />
+  </head>
+  <body>
+    <script>
+      import '@sveltia/cms';
+    </script>
+  </body>
+</html>

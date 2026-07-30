@@ -3,14 +3,12 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import SectionHead from '~/components/SectionHead.astro';
 import LocalBusinessSchema from '~/components/seo/LocalBusinessSchema.astro';
 import BreadcrumbSchema from '~/components/seo/BreadcrumbSchema.astro';
-import { CONTACT_CHANNELS, PHONE_DISPLAY, EMAIL } from '~/lib/contact';
+import { CONTACT_CHANNELS } from '~/lib/contact';
+import page from '~/data/pages/contact.json';
+import { FORM_ACTION, FORM_KEY, thanksUrl } from '~/lib/forms';
 
-const title = 'Contact — Silk & Velvet Events';
-const description = "Reach Sofiya by text, Instagram, Messenger, or email. We reply within 1–2 business days. Serving NYC, Long Island, and New Jersey.";
-const formspreeProjectId = import.meta.env.PUBLIC_FORMSPREE_PROJECT_ID;
-const formAction = formspreeProjectId
-  ? `https://formspree.io/p/${formspreeProjectId}/f/contact-inquiry`
-  : null;
+const title = page.seoTitle;
+const description = page.seoDescription;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -20,9 +18,9 @@ const formAction = formspreeProjectId
   <section class="contact">
     <SectionHead
       as="h1"
-      eyebrow="Contact"
-      title="Tell us about your <em>event.</em>"
-      sub="Sofiya replies fastest by text. The form below works too — quote turnaround is 1–2 business days."
+      eyebrow={page.eyebrow}
+      title={page.title}
+      sub={page.sub}
     />
 
     <div class="contact__grid">
@@ -35,12 +33,7 @@ const formAction = formspreeProjectId
                 <span class="channel__icon" aria-hidden="true">{c.icon}</span>
                 <span>
                   <strong>{c.label}</strong>
-                  <em>
-                    {c.id === 'text' && PHONE_DISPLAY}
-                    {c.id === 'email' && EMAIL}
-                    {c.id === 'instagram' && '@silkandvelvet_events'}
-                    {c.id === 'messenger' && 'm.me/SilkandVelvetEvents'}
-                  </em>
+                  <em>{c.handle}</em>
                 </span>
               </a>
             </li>
@@ -48,7 +41,13 @@ const formAction = formspreeProjectId
         </ul>
       </div>
 
-      <form class="contact__form" action={formAction || '#'} method="POST" novalidate>
+      <form class="contact__form" action={FORM_ACTION} method="POST">
+        <input type="hidden" name="access_key" value={FORM_KEY} />
+        <input type="hidden" name="subject" value="New contact inquiry — silkandvelvetevents.com" />
+        <input type="hidden" name="from_name" value="Silk & Velvet website" />
+        <input type="hidden" name="redirect" value={thanksUrl()} />
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" aria-hidden="true" />
+
         <h2 class="form__title">Or fill out the inquiry form</h2>
         <div class="form__row">
           <label for="name">Your name</label>
@@ -84,11 +83,11 @@ const formAction = formspreeProjectId
           <label for="message">Tell us a little more</label>
           <textarea id="message" name="message" rows="5" placeholder="Guest count, venue (if known), what you'd love help with…"></textarea>
         </div>
-        <button class="form__submit" type="submit" disabled={!formAction}>
-          {formAction ? 'Send inquiry →' : 'Form coming soon'}
+        <button class="form__submit" type="submit" disabled={!FORM_KEY}>
+          {FORM_KEY ? 'Send inquiry →' : 'Form coming soon'}
         </button>
-        {!formAction && (
-          <p class="form__note">Form submissions are routed once Sofiya provisions Formspree. Until then, please use a channel above.</p>
+        {!FORM_KEY && (
+          <p class="form__note">The form is being set up. In the meantime, please use a channel above — Sofiya replies fastest by text.</p>
         )}
       </form>
     </div>

@@ -1,5 +1,5 @@
 ---
-import { SMS_HREF, EMAIL_HREF, INSTAGRAM_URL, FACEBOOK_URL, PHONE_DISPLAY, SERVICE_AREAS } from '~/lib/contact';
+import { SMS_HREF, EMAIL_HREF, INSTAGRAM_URL, FACEBOOK_URL, PHONE_DISPLAY, SERVICE_AREAS, FOOTER_TAGLINE } from '~/lib/contact';
 
 const visit = [
   { href: '/services/', label: 'Services' },
@@ -24,7 +24,7 @@ const year = new Date().getFullYear();
         <span class="nav__monogram" aria-hidden="true">SV</span>
         <span>Silk &amp; Velvet</span>
       </div>
-      <p class="foot__tagline">Where creativity meets elegance, making your vision unforgettable.</p>
+      <p class="foot__tagline">{FOOTER_TAGLINE}</p>
     </div>
     <div class="foot__col">
       <h4>Visit</h4>
