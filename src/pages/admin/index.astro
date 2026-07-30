@@ -16,7 +16,9 @@
   </head>
   <body>
     <script>
-      import '@sveltia/cms';
+      // The npm build needs an explicit init — only the CDN bundle self-starts.
+      import CMS from '@sveltia/cms';
+      CMS.init();
     </script>
   </body>
 </html>
