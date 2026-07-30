@@ -6,32 +6,6 @@
     "title": "Recent work, <em>by category.</em>",
     "sub": "Three streams — weddings, events, balloons. Pick a thread."
   },
-  "categories": [
-    {
-      "slug": "wedding-details",
-      "label": "Wedding Details",
-      "sub": "Tablescapes, ceremony moments, florals, and the small details guests remember.",
-      "cardSub": "Tablescapes, florals, ceremony moments.",
-      "seoDescription": "Wedding tablescapes, ceremony designs, and floral installs from Silk & Velvet Events across NYC, Long Island, and New Jersey.",
-      "cover": ""
-    },
-    {
-      "slug": "event-decor",
-      "label": "Event Decor",
-      "sub": "Baby and bridal showers, milestone birthdays, holiday parties, corporate gatherings.",
-      "cardSub": "Showers, milestones, holiday parties.",
-      "seoDescription": "Birthday, milestone, and shower decor by Silk & Velvet Events. Real installs from the tri-state.",
-      "cover": ""
-    },
-    {
-      "slug": "balloon-decor",
-      "label": "Balloon Decor",
-      "sub": "Arches, garlands, organics, columns, and full-room ceiling treatments.",
-      "cardSub": "Arches, organics, ceiling installs.",
-      "seoDescription": "Sculpted balloon arches, organics, and ceiling installs by Silk & Velvet Events. NYC, Long Island, NJ.",
-      "cover": ""
-    }
-  ],
   "photos": [
     {
       "image": "",
@@ -41,7 +15,7 @@
       "featured": true
     },
     {
-      "image": "",
+      "image": "/uploads/img_8937.webp",
       "alt": "Wedding in Long Island",
       "caption": "Wedding · Long Island",
       "category": "wedding-details",
@@ -88,6 +62,32 @@
       "caption": "Ceiling install · Queens",
       "category": "balloon-decor",
       "featured": false
+    }
+  ],
+  "categories": [
+    {
+      "slug": "wedding-details",
+      "label": "Wedding Details",
+      "cardSub": "Tablescapes, florals, ceremony moments.",
+      "sub": "Tablescapes, ceremony moments, florals, and the small details guests remember.",
+      "seoDescription": "Wedding tablescapes, ceremony designs, and floral installs from Silk & Velvet Events across NYC, Long Island, and New Jersey.",
+      "cover": ""
+    },
+    {
+      "slug": "event-decor",
+      "label": "Event Decor",
+      "cardSub": "Showers, milestones, holiday parties.",
+      "sub": "Baby and bridal showers, milestone birthdays, holiday parties, corporate gatherings.",
+      "seoDescription": "Birthday, milestone, and shower decor by Silk & Velvet Events. Real installs from the tri-state.",
+      "cover": ""
+    },
+    {
+      "slug": "balloon-decor",
+      "label": "Balloon Decor",
+      "cardSub": "Arches, organics, ceiling installs.",
+      "sub": "Arches, garlands, organics, columns, and full-room ceiling treatments.",
+      "seoDescription": "Sculpted balloon arches, organics, and ceiling installs by Silk & Velvet Events. NYC, Long Island, NJ.",
+      "cover": ""
     }
   ]
 }
