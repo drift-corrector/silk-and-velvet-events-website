@@ -67,11 +67,13 @@ printf '<value>' | npx wrangler secret put <NAME>
 |---|---|
 | `GITHUB_CLIENT_ID` | `Ov23liIPwpyAuVLINHhM` |
 | `GITHUB_CLIENT_SECRET` | the secret from the OAuth app page |
-| `ALLOWED_DOMAINS` | `silkandvelvetevents.com, *.silkandvelvetevents.com, localhost:4321` |
+| `ALLOWED_DOMAINS` | `silkandvelvetevents.com, *.silkandvelvetevents.com` |
 
 `ALLOWED_DOMAINS` is what stops someone else's site pointing at this worker to
-borrow the OAuth app. `localhost:4321` is in there so `npm run dev` can sign in
-too — drop it if you'd rather lock it down to production only.
+borrow the OAuth app. The worker matches against the **hostname only** — a port
+is never part of the comparison, so an entry like `localhost:4321` silently
+never matches. That's why local dev can't use GitHub sign-in; use *Work with
+Local Repository* instead (see below).
 
 **4. Point the CMS at it.** Done — `base_url` in `public/admin/config.yml`.
 
