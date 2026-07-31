@@ -102,6 +102,32 @@ set up" note, rather than silently dropping inquiries.
 `PUBLIC_FORMSPREE_PROJECT_ID` and `FORMSPREE_DEPLOY_KEY` are now dead vault
 entries and can be deleted.
 
+## Why the repo is public
+
+**Vercel's Hobby plan refuses to build a commit authored by anyone who isn't a
+member of the Vercel team.** Sofiya's CMS saves commit as her, so on a private
+repo every single one was rejected — the commit landed in git, no deploy ran,
+and the only signal was a "attempted to deploy... but they're not a member of
+the team" email to Oscar. Six of her edits sat undeployed before it was noticed.
+
+Vercel builds any contributor's commits on a **public** repo, so the repo was
+made public on 2026-07-31. That keeps the whole setup at $0. The alternatives
+were Vercel Pro at $20/month per seat, or routing deploys through a GitHub
+Action calling a deploy hook.
+
+Nothing sensitive is exposed: git history was audited before flipping and has
+never contained a credential. All secrets live in Vercel environment variables,
+the Cloudflare Worker, and gitignored `.env.local`. The Web3Forms key and the
+GitHub OAuth **client ID** are both public by design — they ship in the built
+HTML and in OAuth redirects respectively.
+
+One side effect: public repos expose commit author emails, so Sofiya's address
+is visible in git history. She can hide it via GitHub → Settings → Emails →
+"Keep my email addresses private".
+
+**Do not make this repo private again** without first moving deploys to a
+GitHub Action + deploy hook, or her edits will silently stop going live.
+
 ## Why a bad save can't break the deploy
 
 The markdown collections used to carry strict Zod schemas — `inclusions` needed
