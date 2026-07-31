@@ -1,10 +1,14 @@
 {
   "phone": "+16468208418",
   "phoneDisplay": "646.820.8418",
-  "email": "silk.and.velvet.events1@gmail.com",
+  "email": "hello@ silkandvelvetevents.com",
   "instagramHandle": "silkandvelvet_events",
   "facebookPage": "SilkandVelvetEvents",
   "footerTagline": "Where creativity meets elegance, making your vision unforgettable.",
-  "serviceAreas": ["New York City", "Long Island", "New Jersey"],
+  "serviceAreas": [
+    "New York City",
+    "New Jersey",
+    "Long Island"
+  ],
   "smsPrefill": "Hi Sofiya, I'd love to chat about an event ..."
 }
