@@ -76,6 +76,20 @@
       "caption": "Tablescape • East Brunswick",
       "category": "event-decor",
       "featured": false
+    },
+    {
+      "image": "/uploads/de3730aa-0e12-4712-86f7-d5d7f648d835.webp",
+      "alt": "Baby Shower in Brooklyn, NY",
+      "caption": "Baby Shower• Brooklyn",
+      "category": "balloon-decor",
+      "featured": false
+    },
+    {
+      "image": "/uploads/img_7411.webp",
+      "alt": "Baby shower cake",
+      "caption": "",
+      "category": "event-decor",
+      "featured": false
     }
   ],
   "categories": [
