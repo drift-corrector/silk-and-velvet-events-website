@@ -8,59 +8,73 @@
   },
   "photos": [
     {
-      "image": "",
-      "alt": "Bachelorette in Hoboken",
-      "caption": "Bachelorette · Hoboken",
+      "image": "/uploads/f1e30513-e12e-47ee-8bb7-ec9e5a477202.webp",
+      "alt": "Bachelorette in Puerto Rico",
+      "caption": "Bachelorette ·",
       "category": "event-decor",
       "featured": true
     },
     {
-      "image": "",
+      "image": "/uploads/7e6a2278_original.webp",
       "alt": "Wedding in Long Island",
       "caption": "Wedding · Long Island",
       "category": "wedding-details",
       "featured": true
     },
     {
-      "image": "",
-      "alt": "Baby shower in Queens",
-      "caption": "Baby shower · Queens",
+      "image": "/uploads/11712f77-8b00-491b-a71d-2a416eb8f2c5.webp",
+      "alt": "Baby shower in Jersey City",
+      "caption": "Baby shower · Jersey City",
       "category": "event-decor",
       "featured": true
     },
     {
-      "image": "",
-      "alt": "Holiday event in Manhattan",
-      "caption": "Holiday · Manhattan",
+      "image": "/uploads/img_6948.webp",
+      "alt": "First Birthday  in Cherry Hill",
+      "caption": "First Birthday· Cherry Hill",
       "category": "event-decor",
       "featured": true
     },
     {
-      "image": "",
-      "alt": "Birthday in Englewood",
-      "caption": "Birthday · Englewood",
-      "category": "event-decor",
+      "image": "/uploads/img_6337.webp",
+      "alt": "Valentine Day in Englewood",
+      "caption": "Holiday set up · Englewood",
+      "category": "balloon-decor",
       "featured": true
     },
     {
-      "image": "",
-      "alt": "Wedding in Hudson Valley",
-      "caption": "Wedding · Hudson Valley",
+      "image": "/uploads/img_9275.webp",
+      "alt": "Wedding in Brooklyn",
+      "caption": "Wedding · Brooklyn",
       "category": "wedding-details",
       "featured": true
     },
     {
-      "image": "",
-      "alt": "Balloon arch in Brooklyn",
-      "caption": "Balloon arch · Brooklyn",
+      "image": "/uploads/img_7492.webp",
+      "alt": "Balloons in Brooklyn",
+      "caption": "Balloons · Brooklyn",
       "category": "balloon-decor",
       "featured": false
     },
     {
-      "image": "",
-      "alt": "Ceiling balloon install in Queens",
-      "caption": "Ceiling install · Queens",
+      "image": "/uploads/ee34ebd3-9e69-485f-abdc-37be90943816.webp",
+      "alt": "Balloon Arch  in Brooklyn",
+      "caption": "Balloon Arch · Brooklyn",
       "category": "balloon-decor",
+      "featured": false
+    },
+    {
+      "image": "/uploads/img_7405.webp",
+      "alt": "Centerpieces for baby shower in Orange Grill Brooklyn",
+      "caption": "Centerpieces • Brooklyn",
+      "category": "balloon-decor",
+      "featured": true
+    },
+    {
+      "image": "/uploads/img_6345.webp",
+      "alt": "Tablescape set up in East Brunswick, NJ",
+      "caption": "Tablescape • East Brunswick",
+      "category": "event-decor",
       "featured": false
     }
   ],
